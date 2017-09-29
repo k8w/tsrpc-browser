@@ -1,0 +1,29 @@
+{
+  "name": "tsrpc-browser",
+  "version": "0.1.0",
+  "description": "TSRPC Client for browser",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "rm -rf dist && tsc -d && cp package.json LICENSE README.md dist/ && find dist/test -name \"*.d.ts\" | xargs rm -rf"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/k8w/tsrpc-browser.git"
+  },
+  "keywords": [
+    "k8w",
+    "tsrpc",
+    "typescript",
+    "fullstack",
+    "rpc",
+    "framework"
+  ],
+  "author": "k8w",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.23"
+  },
+  "typings": "index.d.ts"
+}
