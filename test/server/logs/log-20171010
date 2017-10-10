@@ -1,0 +1,39 @@
+[2017-10-10 16:07:54.508] [INFO] <2da6> - √ TSRPC inited succ
+[2017-10-10 16:07:54.515] [INFO] <2da6> - √ Server started at 3301...
+[2017-10-10 16:45:28.391] [INFO] <68c8> - √ TSRPC inited succ
+[2017-10-10 16:45:28.397] [INFO] <68c8> - √ Server started at 3301...
+[2017-10-10 17:30:58.773] [ERROR] <68c8> - Invalid Request Body /api/ function stringify() { [native code] }
+[2017-10-10 17:34:36.605] [INFO] <68c8> - [ApiReq] #79ca5950 /HelloWorld {}
+[2017-10-10 17:34:36.608] [INFO] <68c8> - [ApiRes] #79ca5950 
+[2017-10-10 17:34:44.793] [INFO] <68c8> - [ApiReq] #68c2783d /HelloWorld { name: 'test' }
+[2017-10-10 17:34:44.796] [INFO] <68c8> - [ApiRes] #68c2783d 
+[2017-10-10 17:57:20.458] [INFO] <cc6d> - √ TSRPC inited succ
+[2017-10-10 17:57:20.464] [INFO] <cc6d> - √ Server started at 3301...
+[2017-10-10 17:57:46.202] [INFO] <c60a> - √ TSRPC inited succ
+[2017-10-10 17:57:46.208] [INFO] <c60a> - √ Server started at 3301...
+[2017-10-10 18:01:48.877] [INFO] <6201> - √ TSRPC inited succ
+[2017-10-10 18:01:48.884] [INFO] <6201> - √ Server started at 3301...
+[2017-10-10 18:03:30.249] [INFO] <373c> - √ TSRPC inited succ
+[2017-10-10 18:03:30.255] [INFO] <373c> - √ Server started at 3301...
+[2017-10-10 18:07:28.236] [INFO] <94c1> - √ TSRPC inited succ
+[2017-10-10 18:07:28.241] [INFO] <94c1> - √ Server started at 3301...
+[2017-10-10 18:08:55.776] [INFO] <7777> - √ TSRPC inited succ
+[2017-10-10 18:08:55.780] [INFO] <7777> - √ Server started at 3301...
+[2017-10-10 18:11:15.560] [INFO] <414d> - √ TSRPC inited succ
+[2017-10-10 18:11:15.563] [INFO] <414d> - √ Server started at 3301...
+[2017-10-10 18:11:19.784] [INFO] <414d> - [ApiReq] #3291376a /HelloWorld { name: 'test' }
+[2017-10-10 18:11:19.790] [INFO] <414d> - [ApiRes] #3291376a 
+[2017-10-10 18:11:19.801] [INFO] <414d> - [ApiReq] #30bce9e0 /HelloWorld { name: 'test' }
+[2017-10-10 18:11:19.802] [INFO] <414d> - [ApiRes] #30bce9e0 
+[2017-10-10 18:11:19.811] [INFO] <414d> - [ApiReq] #d165a416 /HelloWorld { name: 'test' }
+[2017-10-10 18:11:19.812] [INFO] <414d> - [ApiRes] #d165a416 
+[2017-10-10 18:11:19.819] [INFO] <414d> - [ApiReq] #6b1f9843 /HelloWorld { name: 'test' }
+[2017-10-10 18:11:19.820] [INFO] <414d> - [ApiRes] #6b1f9843 
+[2017-10-10 18:11:28.986] [INFO] <414d> - [ApiReq] #31cd15f1 /HelloWorld { name: 'test' }
+[2017-10-10 18:11:28.989] [INFO] <414d> - [ApiRes] #31cd15f1 
+[2017-10-10 18:11:29.005] [INFO] <414d> - [ApiReq] #604afbdb /HelloWorld { name: 'test' }
+[2017-10-10 18:11:29.006] [INFO] <414d> - [ApiRes] #604afbdb 
+[2017-10-10 18:11:29.018] [INFO] <414d> - [ApiReq] #bcc84234 /HelloWorld { name: 'test' }
+[2017-10-10 18:11:29.019] [INFO] <414d> - [ApiRes] #bcc84234 
+[2017-10-10 18:11:29.031] [INFO] <414d> - [ApiReq] #da5e9917 /HelloWorld { name: 'test' }
+[2017-10-10 18:11:29.032] [INFO] <414d> - [ApiRes] #da5e9917 

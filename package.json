@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "build": "rm -rf dist && tsc -d && cp package.json LICENSE README.md dist/ && find dist/test -name \"*.d.ts\" | xargs rm -rf"
+    "build": "rm -rf dist && tsc -d && cp package.json LICENSE README.md dist/ && cp -rf test/index.html test/protocol test/mocha dist/test/"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,14 @@
   "author": "k8w",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.41",
-    "@types/node": "^8.0.23"
+    "chai": "^4.1.2"
   },
-  "typings": "index.d.ts"
+  "typings": "index.d.ts",
+  "dependencies": {
+    "k8w-extend-native": "^0.1.0",
+    "k8w-super-promise": "^0.1.5",
+    "tsrpc-protocol": "^0.2.5"
+  }
 }

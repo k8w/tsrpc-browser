@@ -1,0 +1,46 @@
+const webpack = require('webpack');
+const path = require('path');
+
+module.exports = {
+    entry: {
+        app: path.resolve(__dirname, 'cases.ts')
+    },
+    output: {
+        filename: 'cases.js'
+    },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js']
+    },
+    resolveLoader: {
+        modules: [
+            path.resolve(__dirname, 'node_modules'),
+            path.resolve(__dirname, 'libs/LongFront/webpack-loaders')
+        ]
+    },
+    module: {
+        rules: [
+            // {
+            //     test: v => v.startsWith(path.resolve(__dirname, 'shared/protocols')),
+            //     enforce: 'pre',
+            //     loader: 'ts-dirname-loader'		//React-Router componentPath=XXX
+            // },
+            {
+                test: /\.tsx?$/, use: [
+                    {
+                        loader: 'ts-loader'
+                    }
+                ]
+            }
+        ]
+    },
+    devServer: {
+        contentBase: __dirname,
+        proxy: {
+            '/api': {
+                target: 'http://127.0.0.1:3301',
+                // pathRewrite: { '^/api': '' },
+                changeOrigin: true
+            }
+        }
+    }
+}
