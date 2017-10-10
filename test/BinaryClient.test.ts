@@ -2,12 +2,11 @@ import RpcClient from '../src/RpcClient';
 import PtlHelloWorld from './protocol/PtlHelloWorld';
 const assert = chai.assert;
 
-const urlApi = 'api';
-
-describe('Client', function () {
+describe('BinaryClient', function () {
     it('ServerURL with postfix /', async function () {
         let client = new RpcClient({
-            serverUrl: `http://localhost:8080/${urlApi}/`
+            serverUrl: `http://localhost:8080/bapi/`,
+            binaryTransport: true
         })
 
         let res = await client.callApi(PtlHelloWorld, { name: 'test' });
@@ -16,7 +15,8 @@ describe('Client', function () {
 
     it('ServerURL without postfix /', async function () {
         let client = new RpcClient({
-            serverUrl: `http://localhost:8080/${urlApi}`
+            serverUrl: `http://localhost:8080/bapi`,
+            binaryTransport: true
         })
 
         let res = await client.callApi(PtlHelloWorld, { name: 'test' });
@@ -25,14 +25,16 @@ describe('Client', function () {
 
     it('relative url with out /$', async function () {
         let res = await new RpcClient({
-            serverUrl: `${urlApi}`
+            serverUrl: `bapi`,
+            binaryTransport: true
         }).callApi(PtlHelloWorld, { name: 'test' });
         assert.equal(res.reply, 'Hello, test!');
     });
 
     it('relative url with /$', async function () {
         let res = await new RpcClient({
-            serverUrl: `${urlApi}/`
+            serverUrl: `bapi/`,
+            binaryTransport: true
         }).callApi(PtlHelloWorld, { name: 'test' });
         assert.equal(res.reply, 'Hello, test!');
     });

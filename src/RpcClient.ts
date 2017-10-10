@@ -30,9 +30,11 @@ export default class RpcClient {
         let output = new SuperPromise<Res, TsRpcError>(async (rs, rj) => {
             //TODO request
             let xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = () => {
+            xhr.responseType = this.config.binaryTransport ? 'arraybuffer' : 'text';
+            xhr.onreadystatechange = async () => {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    let res: TsRpcRes = this.config.ptlDecoder(xhr.responseText);
+                    console.log('response', xhr.response)
+                    let res: TsRpcRes = this.config.binaryTransport ? await this.config.binaryDecoder(xhr.response) : await this.config.ptlDecoder(xhr.response);
                     if (res.errmsg != null) {
                         rj(new TsRpcError(res.errmsg, res.errinfo))
                     }
@@ -41,8 +43,15 @@ export default class RpcClient {
                     }
                 }
             }
-            xhr.open('POST', this.config.serverUrl + rpcUrl, true);
-            xhr.send(this.config.ptlEncoder(req));
+
+            xhr.open('POST', this.config.hideApiPath ? this.config.serverUrl : (this.config.serverUrl + rpcUrl), true);
+
+            if (this.config.hideApiPath) {
+                (req as TsRpcReq).__tsrpc_url__ = rpcUrl;
+            }
+            
+            console.log('abcd', this.config.binaryTransport ? await this.config.binaryEncoder(req) : await this.config.ptlEncoder(req))
+            xhr.send(this.config.binaryTransport ? new Blob([await this.config.binaryEncoder(req)]) : await this.config.ptlEncoder(req));
         })
 
         output.onCancel = () => {

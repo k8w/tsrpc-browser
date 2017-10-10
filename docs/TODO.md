@@ -5,3 +5,7 @@
 
 
 - [ ] Hide URL
+- [ ] Log
+- [ ] Exception and Error
+- [ ] Custom text coder
+- [ ] Custom binary coder

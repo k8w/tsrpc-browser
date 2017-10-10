@@ -395,7 +395,7 @@ tsrpc-protocol@^0.2.2:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/tsrpc-protocol/-/tsrpc-protocol-0.2.5.tgz#77e963250a63b3557af67c04e17c8c433845b0ad"
 
-tsrpc@^0.3.0:
+tsrpc@^0.3.3:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/tsrpc/-/tsrpc-0.3.3.tgz#b38d61fd46034985d0e38b041e598284ca19e9b2"
   dependencies:

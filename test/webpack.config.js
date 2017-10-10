@@ -2,9 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-    entry: {
-        app: path.resolve(__dirname, 'cases.ts')
-    },
+    entry: ['./Client.test.ts', './BinaryClient.test.ts'],
     output: {
         filename: 'cases.js'
     },
@@ -38,7 +36,11 @@ module.exports = {
         proxy: {
             '/api': {
                 target: 'http://127.0.0.1:3301',
-                // pathRewrite: { '^/api': '' },
+                changeOrigin: true
+            },
+            '/bapi': {
+                target: 'http://127.0.0.1:3302',
+                pathRewrite: { '^/bapi': '' },
                 changeOrigin: true
             }
         }
