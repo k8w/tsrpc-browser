@@ -30,3 +30,6 @@ client.callApi(PtlHelloWorld, { name: 'k8w' }).then(res=>{
 1. Support IE9+, Chrome
 1. Not Test: Firefox
 1. BinaryTransport only support: Chrome, IE10+
+
+# Note
+暂时不支持IE8，因为TypeScript的 `default`->`'default'` 的BUG
