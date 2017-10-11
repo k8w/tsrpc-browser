@@ -1,11 +1,11 @@
 {
   "name": "tsrpc-browser",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TSRPC Client for browser",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "build": "rm -rf dist && tsc -d && cp package.json LICENSE README.md dist/ && cp -rf test/index.html test/protocol test/mocha dist/test/"
+    "build": "rm -rf dist && tsc -d && cp package.json LICENSE README.md dist/"
   },
   "repository": {
     "type": "git",

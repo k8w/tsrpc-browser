@@ -6,11 +6,21 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="mocha/mocha.css" />
+
+  <script>
+    if(!Object.assign){
+      document.writeln('<script src="//cdn.bootcss.com/es5-shim/4.5.9/es5-shim.min.js"><\/script>');
+      document.writeln('<script src="//cdn.bootcss.com/es5-shim/4.5.9/es5-sham.min.js"><\/script>');
+    }
+    if (typeof Promise == 'undefined' || String.prototype.startsWith == undefined || Array.prototype.find == undefined) {
+      document.writeln('<script src="//cdn.bootcss.com/es6-shim/0.35.0/es6-shim.min.js"><\/script>');
+    }
+  </script>
 </head>
 
 <body>
   <div id="mocha"></div>
-  <script src="mocha/chai.js"></script>
+  <!-- <script src="mocha/chai.js"></script> -->
   <script src="mocha/mocha.js"></script>
   <script>mocha.setup('bdd');</script>
 

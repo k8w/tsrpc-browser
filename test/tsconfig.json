@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "lib": [
+            "dom",
+            "es6",
+            "dom.iterable",
+            "scripthost"
+        ],
+        "strict": true,
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

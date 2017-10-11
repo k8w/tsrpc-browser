@@ -3,6 +3,7 @@ const path = require('path');
 
 module.exports = {
     entry: ['./Client.test.ts', './BinaryClient.test.ts'],
+    // entry: ['./testcase.test.ts'],
     output: {
         filename: 'cases.js'
     },
@@ -33,6 +34,7 @@ module.exports = {
     },
     devServer: {
         contentBase: __dirname,
+        inline: false,
         proxy: {
             '/api': {
                 target: 'http://127.0.0.1:3301',

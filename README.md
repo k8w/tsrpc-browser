@@ -25,3 +25,8 @@ client.callApi(PtlHelloWorld, { name: 'k8w' }).then(res=>{
     console.log(res.reply); //Hello, k8w!
 })
 ```
+
+# Browser Support
+1. Support IE9+, Chrome
+1. Not Test: Firefox
+1. BinaryTransport only support: Chrome, IE10+

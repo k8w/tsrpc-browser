@@ -3,6 +3,7 @@ import { ReqHelloWorld, ResHelloWorld } from '../../protocol/PtlHelloWorld';
 import { TsRpcError } from 'tsrpc-protocol';
 export default async function ApiHelloWorld(req: ApiRequest<ReqHelloWorld>, res: ApiResponse<ResHelloWorld>) {
     if (req.args.name == 'Error') {
+        res.status(500);
         throw new Error('Error');
     }
 
