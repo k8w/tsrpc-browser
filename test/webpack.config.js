@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
     entry: ['./Client.test.ts', './BinaryClient.test.ts'],
-    // entry: ['./testcase.test.ts'],
+    // entry: ['./index.ts'],
     output: {
         filename: 'cases.js'
     },
@@ -19,9 +19,8 @@ module.exports = {
     module: {
         rules: [
             // {
-            //     test: v => v.startsWith(path.resolve(__dirname, 'shared/protocols')),
-            //     enforce: 'pre',
-            //     loader: 'ts-dirname-loader'		//React-Router componentPath=XXX
+            //     test: v => v.startsWith(path.resolve(__dirname, 'protocol')),
+            //     loader: 'testloader'		//React-Router componentPath=XXX
             // },
             {
                 test: /\.tsx?$/, use: [

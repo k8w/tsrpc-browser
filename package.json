@@ -28,8 +28,8 @@
   },
   "typings": "index.d.ts",
   "dependencies": {
-    "k8w-extend-native": "^0.1.0",
-    "k8w-super-promise": "^0.1.5",
-    "tsrpc-protocol": "^0.2.5"
+    "k8w-extend-native": "^0.1.1",
+    "k8w-super-promise": "^0.1.6",
+    "tsrpc-protocol": "^0.2.6"
   }
 }
