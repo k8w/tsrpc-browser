@@ -3,7 +3,6 @@ const path = require('path');
 
 module.exports = {
     entry: ['./Client.test.ts', './BinaryClient.test.ts'],
-    // entry: ['./index.ts'],
     output: {
         filename: 'cases.js'
     },
