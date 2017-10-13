@@ -4,11 +4,6 @@ import SuperPromise from 'k8w-super-promise';
 import { DefaultClientConfig } from './models/ClientConfig';
 import 'k8w-extend-native';
 
-//应对某些浏览器没有console.debug的情况
-if (!console.debug) {
-    console.debug = console.log;
-}
-
 export default class RpcClient {
     readonly config: ClientConfig;
     private static _sn = 0;

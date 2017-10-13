@@ -1,6 +1,6 @@
 {
   "name": "tsrpc-browser",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "TSRPC Client for browser",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,7 @@
   },
   "typings": "index.d.ts",
   "dependencies": {
-    "k8w-extend-native": "^0.1.1",
+    "k8w-extend-native": "^0.1.2",
     "k8w-super-promise": "^0.1.6",
     "tsrpc-protocol": "^0.2.6"
   }
