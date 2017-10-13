@@ -4,8 +4,8 @@
     2. Webpack loaders: PtlXxx.ts, protocolPath
 
 
-- [ ] Hide URL
-- [ ] Log
+- [x] Hide URL
+- [x] Log
 - [ ] Exception and Error
 - [ ] Custom text coder
 - [ ] Custom binary coder
