@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "ts-loader": "^2.3.7",
+    "tsrpc-protocol-loader": "^0.1.0",
     "typescript": "^2.5.3",
     "webpack": "^3.6.0"
   }

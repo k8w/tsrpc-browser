@@ -17,10 +17,13 @@ module.exports = {
     },
     module: {
         rules: [
-            // {
-            //     test: v => v.startsWith(path.resolve(__dirname, 'protocol')),
-            //     loader: 'testloader'		//React-Router componentPath=XXX
-            // },
+            {
+                test: v => v.startsWith(path.resolve(__dirname, 'protocol')),
+                loader: 'tsrpc-protocol-loader',
+                options: {
+                    protocolPath: path.resolve(__dirname, 'protocol')
+                }
+            },
             {
                 test: /\.tsx?$/, use: [
                     {
