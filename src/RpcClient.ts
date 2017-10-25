@@ -16,6 +16,10 @@ export default class RpcClient {
         this.config.serverUrl = this.config.serverUrl.replace(/\/$/, '');
     }
 
+    static getLastReqSn(): number{
+        return this._sn;
+    }
+
     callApi<Req, Res>(ptl: TsRpcPtl<Req, Res>, req: Req = {} as Req, headers: object = {}): SuperPromise<Res, TsRpcError> {
         let sn = ++RpcClient._sn;
         let rpcUrl = this.getPtlUrl(ptl);
