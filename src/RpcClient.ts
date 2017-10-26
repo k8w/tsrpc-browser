@@ -81,14 +81,14 @@ export default class RpcClient {
             xhr.send(this.config.binaryTransport ? new Blob([await this.config.binaryEncoder(req)]) : await this.config.ptlEncoder(req));
         })
 
-        output.onCancel = () => {
+        output.onCancel(() => {
             this.config.showDebugLog && console.debug(`%cApiCancel%c #${sn}%c ${rpcUrl}`,
                 'background: #999; color: #fff; line-height: 1.5em; padding: 2px 4px;',
                 'color: #1b63bd;',
                 'color: #999;', );
             isAborted = true;
             xhr.abort();
-        }
+        })
 
         return output;
     }

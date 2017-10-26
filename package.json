@@ -1,10 +1,10 @@
 {
   "name": "tsrpc-browser",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "TSRPC Client for browser",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "cd test\\server && start ts-node index.ts && start ts-node binary.ts && cd ..\\ && start webpack-dev-server && cd .. && start http://localhost:8080",
     "build": "rm -rf dist && tsc -d && cp package.json LICENSE README.md dist/"
   },
   "repository": {
@@ -23,13 +23,13 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/chai": "^4.0.4",
-    "@types/mocha": "^2.2.41",
+    "@types/mocha": "^2.2.43",
     "chai": "^4.1.2"
   },
   "typings": "index.d.ts",
   "dependencies": {
     "k8w-extend-native": "^0.1.2",
-    "k8w-super-promise": "^0.1.6",
-    "tsrpc-protocol": "^0.2.6"
+    "k8w-super-promise": "^0.2.0",
+    "tsrpc-protocol": "^0.2.7"
   }
 }
