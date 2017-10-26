@@ -6,6 +6,6 @@
 
 - [x] Hide URL
 - [x] Log
-- [ ] Exception and Error
-- [ ] Custom text coder
-- [ ] Custom binary coder
+- [x] Exception and Error
+- [x] Custom text coder
+- [x] Custom binary coder
