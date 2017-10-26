@@ -67,9 +67,11 @@ pathval@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pathval/-/pathval-1.1.0.tgz#b942e6d4bde653005ef6b71361def8727d0645e0"
 
-tsrpc-protocol@^0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/tsrpc-protocol/-/tsrpc-protocol-0.2.7.tgz#7d81247d06b6f58e36c006a5c73992b0b967eaf3"
+tsrpc-protocol@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/tsrpc-protocol/-/tsrpc-protocol-0.3.0.tgz#090bb5a7e32b8c5081cc1690e3ada0139ab99f08"
+  dependencies:
+    k8w-super-promise "^0.2.0"
 
 type-detect@^4.0.0:
   version "4.0.3"

@@ -1,10 +1,10 @@
 import ClientConfig from './models/ClientConfig';
-import { TsRpcPtl, TsRpcError, TsRpcReq, TsRpcRes } from 'tsrpc-protocol';
+import { TsRpcPtl, TsRpcError, TsRpcReq, TsRpcRes, ITsRpcClient } from 'tsrpc-protocol';
 import SuperPromise from 'k8w-super-promise';
 import { DefaultClientConfig } from './models/ClientConfig';
 import 'k8w-extend-native';
 
-export default class RpcClient {
+export default class RpcClient implements ITsRpcClient {
     readonly config: ClientConfig;
     private static _sn = 0;
 
