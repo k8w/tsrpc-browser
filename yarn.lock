@@ -7,8 +7,8 @@
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.0.4.tgz#fe86315d9a66827feeb16f73bc954688ec950e18"
 
 "@types/mocha@^2.2.43":
-  version "2.2.43"
-  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.43.tgz#03c54589c43ad048cbcbfd63999b55d0424eec27"
+  version "2.2.44"
+  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.44.tgz#1d4a798e53f35212fd5ad4d04050620171cd5b5e"
 
 assertion-error@^1.0.1:
   version "1.0.2"
@@ -39,27 +39,27 @@ get-func-name@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/get-func-name/-/get-func-name-2.0.0.tgz#ead774abee72e20409433a066366023dd6887a41"
 
-k8w-extend-native@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/k8w-extend-native/-/k8w-extend-native-0.1.2.tgz#8032ba40746ebbca71863547de91ae938b5c2196"
+k8w-extend-native@*:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/k8w-extend-native/-/k8w-extend-native-0.1.6.tgz#9af23d9a6654a8927ce786847a606a42af2b3909"
   dependencies:
-    k8w-linq-array "^0.1.3"
-    k8w-super-date "^0.1.2"
-    k8w-super-object "^0.1.3"
+    k8w-linq-array "*"
+    k8w-super-date "*"
+    k8w-super-object "*"
 
-k8w-linq-array@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/k8w-linq-array/-/k8w-linq-array-0.1.3.tgz#977851b46d8dfe61d2d9001a4e3a99509ef2f264"
+k8w-linq-array@*:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/k8w-linq-array/-/k8w-linq-array-0.2.0.tgz#c4dbceb8354ed5c90accdf70e458e52dffd4286f"
 
-k8w-super-date@^0.1.2:
+k8w-super-date@*:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/k8w-super-date/-/k8w-super-date-0.1.2.tgz#bfd29a109027a8b041b97d11319bcc7e02fd65c5"
 
-k8w-super-object@^0.1.3:
+k8w-super-object@*:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/k8w-super-object/-/k8w-super-object-0.1.3.tgz#cbf3bc5ed736ea3af6b939da355bcd675c2d5101"
 
-k8w-super-promise@^0.2.1:
+k8w-super-promise@*:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/k8w-super-promise/-/k8w-super-promise-0.2.1.tgz#1c1ecbb76414246d29bc1e8e4e838605f66e5ea6"
 
@@ -67,11 +67,11 @@ pathval@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pathval/-/pathval-1.1.0.tgz#b942e6d4bde653005ef6b71361def8727d0645e0"
 
-tsrpc-protocol@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/tsrpc-protocol/-/tsrpc-protocol-0.3.2.tgz#72f0ed009243117cfa0c749d2d3d239d61e05f17"
+tsrpc-protocol@*:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/tsrpc-protocol/-/tsrpc-protocol-0.3.3.tgz#fe796ca9a260ddebe7f445c9957a43ed8208017f"
   dependencies:
-    k8w-super-promise "^0.2.1"
+    k8w-super-promise "*"
 
 type-detect@^4.0.0:
   version "4.0.3"
