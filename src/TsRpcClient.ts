@@ -4,7 +4,7 @@ import SuperPromise from 'k8w-super-promise';
 import { DefaultClientConfig } from './models/ClientConfig';
 import 'k8w-extend-native';
 
-export default class RpcClient implements ITsRpcClient {
+export default class TsRpcClient implements ITsRpcClient {
     readonly config: ClientConfig;
     private static _sn = 0;
 
@@ -21,7 +21,7 @@ export default class RpcClient implements ITsRpcClient {
     }
 
     callApi<Req, Res>(ptl: TsRpcPtl<Req, Res>, req: Req = {} as Req, headers: object = {}): SuperPromise<Res, TsRpcError> {
-        let sn = ++RpcClient._sn;
+        let sn = ++TsRpcClient._sn;
         let rpcUrl = this.getPtlUrl(ptl);
 
         //debug log

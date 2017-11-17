@@ -1,4 +1,4 @@
-import RpcClient from '../src/RpcClient';
+import RpcClient from '../src/TsRpcClient';
 import PtlHelloWorld from './protocol/PtlHelloWorld';
 import PtlHelloKing from './protocol/PtlHelloKing';
 import { TsRpcError } from 'tsrpc-protocol';

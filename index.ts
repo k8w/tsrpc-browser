@@ -7,5 +7,5 @@
  */
 
 import 'k8w-extend-native';
-import RpcClient from './src/RpcClient';
-export { RpcClient };
+import TsRpcClient from './src/TsRpcClient';
+export { TsRpcClient };
