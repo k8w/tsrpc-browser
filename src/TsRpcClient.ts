@@ -16,7 +16,7 @@ export default class TsRpcClient implements ITsRpcClient {
         this.config.serverUrl = this.config.serverUrl.replace(/\/$/, '');
     }
 
-    static getLastReqSn(): number{
+    static getLastReqSn(): number {
         return this._sn;
     }
 
@@ -47,7 +47,7 @@ export default class TsRpcClient implements ITsRpcClient {
                         //Network Error
                         if (xhr.status == 0 || (xhr.response == null && xhr.responseText == null)) {
                             setTimeout(() => {
-                                this._throwApiError(req, sn, rpcUrl, rj);
+                                this._throwApiError(ptl, req, sn, rpcUrl, rj);
                             }, 0)
                             return;
                         }
@@ -64,7 +64,7 @@ export default class TsRpcClient implements ITsRpcClient {
                 }
 
                 xhr.onerror = () => {
-                    this._throwApiError(req, sn, rpcUrl, rj);
+                    this._throwApiError(ptl, req, sn, rpcUrl, rj);
                     return;
                 }
 
@@ -105,20 +105,31 @@ export default class TsRpcClient implements ITsRpcClient {
         return ptl.filename.replace(/Ptl([^\/]+)\.[tj]s$/, '$1')
     }
 
-    private _throwApiError(req: any, sn: number, rpcUrl: string, rj: Function) {
+    private _throwApiError(ptl: TsRpcPtl<any, any>, req: any, sn: number, rpcUrl: string, rj: Function) {
         //debug log
         this.config.showDebugLog && console.debug(`%cApiErr%c #${sn}%c ${rpcUrl}`,
             'background: #d81e06; color: #fff; line-height: 1.5em; padding: 2px 4px;',
             'color: #1b63bd;',
             'color: #999;', req, 'Network error');
 
-        rj(new TsRpcError('Network error', 'NETWORK_ERROR'));
+        this._resReject(ptl, req, rj, new TsRpcError('Network error', 'NETWORK_ERROR'));
+    }
+
+    private _resReject(ptl: TsRpcPtl<any, any>, req: any, rj: Function, err: TsRpcError) {
+        rj(err);
+
+        //hook
+        this.onError && this.onError({
+            ptl: ptl,
+            req: req,
+            err: err
+        });
     }
 
     private async _resolveApiRes(xhr: XMLHttpRequest, req: any, ptl: TsRpcPtl<any, any>, sn: number, rpcUrl: string, rs: Function, rj: Function) {
         //IE9 wrongURL 会返回12029
         if (xhr.status == 12029) {
-            this._throwApiError(req, sn, rpcUrl, rj);
+            this._throwApiError(ptl, req, sn, rpcUrl, rj);
             return;
         }
 
@@ -133,7 +144,7 @@ export default class TsRpcClient implements ITsRpcClient {
                 'color: #1b63bd;',
                 'color: #999;', req, 'Response cannot be resolved');
 
-            rj(new TsRpcError('Response cannot be resolved', 'RES_CANNOT_BE_RESOLVED'))
+            this._resReject(ptl, req, rj, new TsRpcError('Response cannot be resolved', 'RES_CANNOT_BE_RESOLVED'))
             return;
         }
 
@@ -144,7 +155,7 @@ export default class TsRpcClient implements ITsRpcClient {
                 'color: #1b63bd;',
                 'color: #999;', req, res);
 
-            rj(new TsRpcError(res.errmsg, res.errinfo))
+            this._resReject(ptl, req, rj, new TsRpcError(res.errmsg, res.errinfo))
         }
         else {
             //debug log
@@ -153,19 +164,20 @@ export default class TsRpcClient implements ITsRpcClient {
                 'color: #1b63bd;',
                 'color: #999;', req, res);
             rs(res);
-        }
 
-        //hook
-        this.onResponse && this.onResponse({
-            ptl: ptl,
-            req: req,
-            res: res
-        });
+            //hook
+            this.onResponse && this.onResponse({
+                ptl: ptl,
+                req: req,
+                res: res
+            });
+        }
     }
 
     //hooks
     onRequest: ((e: RpcRequestEvent) => void) | null | undefined;
     onResponse: ((e: RpcResponseEvent) => void) | null | undefined;
+    onError: ((e: RpcErrorEvent) => void) | null | undefined;
 }
 
 export interface RpcRequestEvent<Req=any, Res=any> {
@@ -177,4 +189,10 @@ export interface RpcResponseEvent<Req=any, Res=any> {
     ptl: TsRpcPtl<Req, Res>,
     req: Req,
     res: Res
+}
+
+export interface RpcErrorEvent<Req=any, Res=any> {
+    ptl: TsRpcPtl<Req, Res>,
+    req: Req,
+    err: TsRpcError
 }
