@@ -31,7 +31,10 @@ export default class TsRpcClient implements ITsRpcClient {
             'color: #999;', req);
 
         //hook 
-        this.onRequest && this.onRequest(ptl, req);
+        this.onRequest && this.onRequest({
+            ptl: ptl,
+            req: req
+        });
 
         let rs, rj, xhr: XMLHttpRequest, isAborted = false;
         let output = new SuperPromise<Res, TsRpcError>(async (rs, rj) => {
@@ -153,10 +156,25 @@ export default class TsRpcClient implements ITsRpcClient {
         }
 
         //hook
-        this.onResponse && this.onResponse(ptl, req, res);
+        this.onResponse && this.onResponse({
+            ptl: ptl,
+            req: req,
+            res: res
+        });
     }
 
     //hooks
-    onRequest: ((ptl: TsRpcPtl<any, any>, req: TsRpcReq) => void) | null | undefined;
-    onResponse: ((ptl: TsRpcPtl<any, any>, req: TsRpcReq, res: TsRpcRes) => void) | null | undefined;
+    onRequest: ((e: RpcRequestEvent) => void) | null | undefined;
+    onResponse: ((e: RpcResponseEvent) => void) | null | undefined;
+}
+
+export interface RpcRequestEvent<Req=any, Res=any> {
+    ptl: TsRpcPtl<Req, Res>,
+    req: Req
+}
+
+export interface RpcResponseEvent<Req=any, Res=any> {
+    ptl: TsRpcPtl<Req, Res>,
+    req: Req,
+    res: Res
 }
