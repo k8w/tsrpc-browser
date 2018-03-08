@@ -7,5 +7,5 @@
  */
 
 import 'k8w-extend-native';
-import TsRpcClient from './src/TsRpcClient';
-export { TsRpcClient };
+import TsrpcClient from './src/TsrpcClient';
+export { TsrpcClient };

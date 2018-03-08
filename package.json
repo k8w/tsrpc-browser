@@ -30,6 +30,6 @@
   "dependencies": {
     "k8w-extend-native": "*",
     "k8w-super-promise": "*",
-    "tsrpc-protocol": "^1.0.1"
+    "tsrpc-protocol": "*"
   }
 }

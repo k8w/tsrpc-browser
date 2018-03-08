@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^8.0.33",
-    "tsrpc": "^0.3.3"
+    "tsrpc": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^9.4.6"
   }
 }

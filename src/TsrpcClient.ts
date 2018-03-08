@@ -1,10 +1,10 @@
 import ClientConfig from './models/ClientConfig';
-import { TsRpcPtl, TsRpcError, TsRpcReq, TsRpcRes, ITsRpcClient } from 'tsrpc-protocol';
+import { TsrpcPtl, TsrpcError, TsrpcReq, TsrpcRes, ITsrpcClient } from 'tsrpc-protocol';
 import SuperPromise from 'k8w-super-promise';
 import { DefaultClientConfig } from './models/ClientConfig';
 import 'k8w-extend-native';
 
-export default class TsRpcClient implements ITsRpcClient {
+export default class TsrpcClient implements ITsrpcClient {
     readonly config: ClientConfig;
     private static _sn = 0;
 
@@ -20,8 +20,8 @@ export default class TsRpcClient implements ITsRpcClient {
         return this._sn;
     }
 
-    callApi<Req, Res>(ptl: TsRpcPtl<Req, Res>, req: Req = {} as Req, headers: object = {}): SuperPromise<Res, TsRpcError> {
-        let sn = ++TsRpcClient._sn;
+    callApi<Req, Res>(ptl: TsrpcPtl<Req, Res>, req: Req = {} as Req, headers: object = {}): SuperPromise<Res, TsrpcError> {
+        let sn = ++TsrpcClient._sn;
         let rpcUrl = this.getPtlUrl(ptl);
 
         //debug log
@@ -37,7 +37,7 @@ export default class TsRpcClient implements ITsRpcClient {
         });
 
         let rs, rj, xhr: XMLHttpRequest, isAborted = false;
-        let output = new SuperPromise<Res, TsRpcError>(async (rs, rj) => {
+        let output = new SuperPromise<Res, TsrpcError>(async (rs, rj) => {
             xhr = new XMLHttpRequest();
 
             if (navigator.userAgent.indexOf('MSIE 8.0;') > -1) {
@@ -78,7 +78,7 @@ export default class TsRpcClient implements ITsRpcClient {
             xhr.responseType = this.config.binaryTransport ? 'arraybuffer' : 'text';
 
             if (this.config.hideApiPath) {
-                (req as TsRpcReq).__tsrpc_url__ = rpcUrl;
+                (req as TsrpcReq).__tsrpc_url__ = rpcUrl;
             }
 
             xhr.send(this.config.binaryTransport ? new Blob([await this.config.binaryEncoder(req)]) : await this.config.ptlEncoder(req));
@@ -100,22 +100,22 @@ export default class TsRpcClient implements ITsRpcClient {
      * filename should be generate by tsrpc-cli or tsrpc-protocol-loader(webpack)
      * @param ptl 
      */
-    private getPtlUrl(ptl: TsRpcPtl<any, any>): string {
+    private getPtlUrl(ptl: TsrpcPtl<any, any>): string {
         //ensure output like /a/b/c (^\/.+[\/]$)
         return ptl.filename.replace(/Ptl([^\/]+)\.[tj]s$/, '$1')
     }
 
-    private _throwApiError(ptl: TsRpcPtl<any, any>, req: any, sn: number, rpcUrl: string, rj: Function) {
+    private _throwApiError(ptl: TsrpcPtl<any, any>, req: any, sn: number, rpcUrl: string, rj: Function) {
         //debug log
         this.config.showDebugLog && console.debug(`%cApiErr%c #${sn}%c ${rpcUrl}`,
             'background: #d81e06; color: #fff; line-height: 1.5em; padding: 2px 4px;',
             'color: #1b63bd;',
             'color: #999;', req, 'Network error');
 
-        this._resReject(ptl, req, rj, new TsRpcError('Network error', 'NETWORK_ERROR'));
+        this._resReject(ptl, req, rj, new TsrpcError('Network error', 'NETWORK_ERROR'));
     }
 
-    private _resReject(ptl: TsRpcPtl<any, any>, req: any, rj: Function, err: TsRpcError) {
+    private _resReject(ptl: TsrpcPtl<any, any>, req: any, rj: Function, err: TsrpcError) {
         rj(err);
 
         //hook
@@ -126,14 +126,14 @@ export default class TsRpcClient implements ITsRpcClient {
         });
     }
 
-    private async _resolveApiRes(xhr: XMLHttpRequest, req: any, ptl: TsRpcPtl<any, any>, sn: number, rpcUrl: string, rs: Function, rj: Function) {
+    private async _resolveApiRes(xhr: XMLHttpRequest, req: any, ptl: TsrpcPtl<any, any>, sn: number, rpcUrl: string, rs: Function, rj: Function) {
         //IE9 wrongURL 会返回12029
         if (xhr.status == 12029) {
             this._throwApiError(ptl, req, sn, rpcUrl, rj);
             return;
         }
 
-        let res: TsRpcRes;
+        let res: TsrpcRes;
         try {
             res = this.config.binaryTransport ? await this.config.binaryDecoder(xhr.response) : await this.config.ptlDecoder(xhr.responseText || xhr.response);
         }
@@ -144,7 +144,7 @@ export default class TsRpcClient implements ITsRpcClient {
                 'color: #1b63bd;',
                 'color: #999;', req, 'Response cannot be resolved');
 
-            this._resReject(ptl, req, rj, new TsRpcError('Response cannot be resolved', 'RES_CANNOT_BE_RESOLVED'))
+            this._resReject(ptl, req, rj, new TsrpcError('Response cannot be resolved', 'RES_CANNOT_BE_RESOLVED'))
             return;
         }
 
@@ -155,7 +155,7 @@ export default class TsRpcClient implements ITsRpcClient {
                 'color: #1b63bd;',
                 'color: #999;', req, res);
 
-            this._resReject(ptl, req, rj, new TsRpcError(res.errmsg, res.errinfo))
+            this._resReject(ptl, req, rj, new TsrpcError(res.errmsg, res.errinfo))
         }
         else {
             //debug log
@@ -175,24 +175,24 @@ export default class TsRpcClient implements ITsRpcClient {
     }
 
     //hooks
-    onRequest: ((e: RpcRequestEvent) => void) | null | undefined;
-    onResponse: ((e: RpcResponseEvent) => void) | null | undefined;
-    onError: ((e: RpcErrorEvent) => void) | null | undefined;
+    onRequest: ((e: TsrpcRequestEvent) => void) | null | undefined;
+    onResponse: ((e: TsrpcResponseEvent) => void) | null | undefined;
+    onError: ((e: TsrpcErrorEvent) => void) | null | undefined;
 }
 
-export interface RpcRequestEvent<Req=any, Res=any> {
-    ptl: TsRpcPtl<Req, Res>,
+export interface TsrpcRequestEvent<Req=any, Res=any> {
+    ptl: TsrpcPtl<Req, Res>,
     req: Req
 }
 
-export interface RpcResponseEvent<Req=any, Res=any> {
-    ptl: TsRpcPtl<Req, Res>,
+export interface TsrpcResponseEvent<Req=any, Res=any> {
+    ptl: TsrpcPtl<Req, Res>,
     req: Req,
     res: Res
 }
 
-export interface RpcErrorEvent<Req=any, Res=any> {
-    ptl: TsRpcPtl<Req, Res>,
+export interface TsrpcErrorEvent<Req=any, Res=any> {
+    ptl: TsrpcPtl<Req, Res>,
     req: Req,
-    err: TsRpcError
+    err: TsrpcError
 }

@@ -8,10 +8,12 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^9.4.6",
     "ts-loader": "^2.3.7",
-    "tsrpc-protocol-loader": "^0.1.0",
-    "typescript": "^2.5.3",
+    "tsrpc-protocol-loader": "^0.2.3",
+    "typescript": "^2.7.2",
     "webpack": "^3.6.0"
   }
 }

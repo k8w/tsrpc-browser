@@ -1,7 +1,7 @@
-import RpcClient from '../src/TsRpcClient';
+import TsrpcClient from '../src/TsrpcClient';
 import PtlHelloWorld from './protocol/PtlHelloWorld';
 import PtlHelloKing from './protocol/PtlHelloKing';
-import { TsRpcError } from 'tsrpc-protocol';
+import { TsrpcError } from 'tsrpc-protocol';
 import * as assert from 'assert';
 
 const urlApi = 'api';
@@ -10,24 +10,24 @@ const clientConfig = {
 }
 
 describe('Client', function () {
-    let client: RpcClient;
+    let client: TsrpcClient;
 
     before(function () {
-        client = new RpcClient(Object.merge({}, clientConfig, {
+        client = new TsrpcClient(Object.merge({}, clientConfig, {
             serverUrl: `http://localhost:8080/${urlApi}/`
         }))
     })
 
     describe('serverUrl', function () {
         it('absolute URL with postfix /', async function () {            
-            let res = await new RpcClient(Object.merge({}, clientConfig, {
+            let res = await new TsrpcClient(Object.merge({}, clientConfig, {
                 serverUrl: `http://localhost:8080/${urlApi}/`
             })).callApi(PtlHelloWorld, { name: 'test' });
             assert.equal(res.reply, 'Hello, test!');
         });
 
         it('absolute URL without postfix /', async function () {
-            let res = await new RpcClient(Object.merge({}, clientConfig, {
+            let res = await new TsrpcClient(Object.merge({}, clientConfig, {
                 serverUrl: `http://localhost:8080/${urlApi}`
             })).callApi(PtlHelloWorld, { name: 'test' });
             assert.equal(res.reply, 'Hello, test!');
@@ -35,14 +35,14 @@ describe('Client', function () {
 
         it('relative URL with postfix /', async function () {
             
-            let res = await new RpcClient(Object.merge({}, clientConfig, {
+            let res = await new TsrpcClient(Object.merge({}, clientConfig, {
                 serverUrl: `${urlApi}/`
             })).callApi(PtlHelloWorld, { name: 'test' });
             assert.equal(res.reply, 'Hello, test!');
         });
 
         it('relative URL without postfix /', async function () {            
-            let res = await new RpcClient(Object.merge({}, clientConfig, {
+            let res = await new TsrpcClient(Object.merge({}, clientConfig, {
                 serverUrl: `${urlApi}`
             })).callApi(PtlHelloWorld, { name: 'test' });
             assert.equal(res.reply, 'Hello, test!');
@@ -51,13 +51,13 @@ describe('Client', function () {
         it('wrong URL', async function () {
             this.timeout(999999)
             try {
-                await new RpcClient(Object.merge({}, clientConfig, {
+                await new TsrpcClient(Object.merge({}, clientConfig, {
                     serverUrl: 'http://localhost:12345'
                 })).callApi(PtlHelloWorld, { name: 'test' });
                 assert.fail('Should not be here')
             }
             catch (e) {
-                assert.equal((e as TsRpcError).info, 'NETWORK_ERROR');
+                assert.equal((e as TsrpcError).info, 'NETWORK_ERROR');
             }            
         });
     })
@@ -102,14 +102,14 @@ describe('Client', function () {
         }
     })
 
-    it('TsRpcError', async function () {
+    it('TsrpcError', async function () {
         try {
-            await client.callApi(PtlHelloWorld, { name: 'TsRpcError' });
+            await client.callApi(PtlHelloWorld, { name: 'TsrpcError' });
             assert(false, 'Should not get res')
         }
         catch (e) {
-            assert.ok(e.message.startsWith('TsRpcError'));
-            assert.equal(e.info, 'TsRpcError');
+            assert.ok(e.message.startsWith('TsrpcError'));
+            assert.equal(e.info, 'TsrpcError');
         }
     })
 

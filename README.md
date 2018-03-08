@@ -23,10 +23,10 @@ npm install tsrpc-browser
 ```
 
 ```typescript
-import { RpcClient } from 'tsrpc-browser';
+import { TsrpcClient } from 'tsrpc-browser';
 import PtlHelloWorld from './protocol/PtlHelloWorld';
 
-let client = new RpcClient({ serverUrl: 'http://localhost:3000' })
+let client = new TsrpcClient({ serverUrl: 'http://localhost:3000' })
 
 // The same with TSRPC NodeJS Client
 client.callApi(PtlHelloWorld, { name: 'k8w' }).then(res => {
