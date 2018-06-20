@@ -8,4 +8,4 @@
 
 import 'k8w-extend-native';
 import TsrpcClient from './src/TsrpcClient';
-export { TsrpcClient as default };
+export default TsrpcClient;

@@ -1,6 +1,6 @@
 {
   "name": "tsrpc-browser",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TSRPC Client for browser",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   "author": "k8w",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/chai": "^4.0.4",
+    "@types/chai": "^4.1.4",
     "@types/mocha": "^2.2.43",
     "chai": "^4.1.2"
   },
