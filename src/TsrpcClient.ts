@@ -105,8 +105,8 @@ export default class TsrpcClient implements ITsrpcClient {
         //ensure output like /a/b/c (^\/.+[\/]$)
         let output = ptl.filename.replace(/\\/g, '/');
         if (this.config.protocolPath) {
-            if (ptl.filename.indexOf(this.config.protocolPath) !== 0) {
-                console.log('PTL_PATH_ERR', ptl.name, ptl.filename, this.config.protocolPath);
+            if (output.indexOf(this.config.protocolPath) !== 0) {
+                console.log('PTL_PATH_ERR', ptl.name, output, this.config.protocolPath);
                 throw new Error(`Protocol ${ptl.name} not in protocolPath.`);
             }
             output = output.substr(this.config.protocolPath.length);
