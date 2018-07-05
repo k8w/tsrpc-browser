@@ -6,6 +6,9 @@ export default interface ClientConfig {
      */
     serverUrl: string;
 
+    /** protocol folder path */
+    protocolPath: string;
+
     /**
      * If true, api path will hide from URL (passed via body)
      */
@@ -51,6 +54,7 @@ export default interface ClientConfig {
  */
 export const DefaultClientConfig: ClientConfig = {
     serverUrl: '',
+    protocolPath: '',
     hideApiPath: false,
     ptlEncoder: JSON.stringify,
     ptlDecoder: JSON.parse,

@@ -14,6 +14,7 @@ export default class TsrpcClient implements ITsrpcClient {
         this.config = Object.merge({}, DefaultClientConfig, config);
         //serverUrl统一不用/结尾 因为rpcUrl是/开头的
         this.config.serverUrl = this.config.serverUrl.replace(/\/$/, '');
+        this.config.protocolPath = this.config.protocolPath.replace(/\/+$/, '');
     }
 
     static getLastReqSn(): number {
@@ -102,7 +103,19 @@ export default class TsrpcClient implements ITsrpcClient {
      */
     private getPtlUrl(ptl: TsrpcPtl<any, any>): string {
         //ensure output like /a/b/c (^\/.+[\/]$)
-        return ptl.filename.replace(/Ptl([^\/]+)\.[tj]s$/, '$1')
+        let output = ptl.filename;
+        if (this.config.protocolPath) {
+            if (ptl.filename.indexOf(this.config.protocolPath) !== 0) {
+                console.log('PTL_PATH_ERR', ptl.name, ptl.filename, this.config.protocolPath);
+                throw new Error(`Protocol ${ptl.name} not in protocolPath.`);
+            }
+            output = output.substr(this.config.protocolPath.length);
+        }
+        output = output.replace(/Ptl([^\/]+)\.[tj]s$/, '$1');
+        if (output[0] !== '/') {
+            output = '/' + output;
+        }
+        return output;
     }
 
     private _throwApiError(ptl: TsrpcPtl<any, any>, req: any, sn: number, rpcUrl: string, rj: Function) {
