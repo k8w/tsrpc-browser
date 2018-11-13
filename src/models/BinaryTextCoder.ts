@@ -4,7 +4,7 @@ export default class BinaryTextCoder {
             let blob = new Blob([JSON.stringify(content)], { type: 'application/octet-stream' });
             let reader = new FileReader();
             reader.onload = () => {
-                rs(reader.result)
+                rs(reader.result as ArrayBuffer)
             }
             reader.readAsArrayBuffer(blob);
         })
@@ -15,7 +15,7 @@ export default class BinaryTextCoder {
             let blob = new Blob([buffer]);
             let reader = new FileReader();
             reader.onload = () => {
-                rs(JSON.parse(reader.result))
+                rs(JSON.parse(reader.result as any))
             }
             reader.readAsText(blob);
         })
