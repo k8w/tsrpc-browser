@@ -1,19 +1,25 @@
 {
-  "name": "tsrpc-browser-test",
+  "name": "test",
   "version": "1.0.0",
   "description": "",
-  "main": "webpack.config.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "dev": "webpack-dev-server",
+    "test": "START npm run start:back & npm run start:front",
+    "start:back": "cd server && ts-node index.ts & cd ..",
+    "start:front": "npm run build && npx http-server dist -p 3001 -c-1 -o http://localhost:3001/index.html"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "ts-loader": "^6.0.4",
+    "tsrpc": "^2.0.4",
+    "webpack": "^4.36.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  },
   "devDependencies": {
-    "@types/node": "^9.4.6",
-    "ts-loader": "^2.3.7",
-    "tsrpc-protocol-loader": "^0.2.3",
-    "typescript": "^2.7.2",
-    "webpack": "^3.6.0"
+    "http-server": "^0.11.1"
   }
 }

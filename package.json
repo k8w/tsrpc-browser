@@ -1,11 +1,12 @@
 {
   "name": "tsrpc-browser",
-  "version": "1.2.0",
+  "version": "2.0.1",
   "description": "TSRPC Client for browser",
   "main": "index.js",
   "scripts": {
-    "test": "cd test\\server && start ts-node index.ts && start ts-node binary.ts && cd ..\\ && start webpack-dev-server && cd .. && start http://localhost:8080",
-    "build": "rm -rf dist && tsc -d && cp package.json LICENSE README.md dist/"
+    "pretest": "cd test && npm i & cd ..",
+    "test": "cd test && npm test & cd ..",
+    "build": "rm -rf dist && npx rollup -c && cp package.json LICENSE README.md dist/"
   },
   "repository": {
     "type": "git",
@@ -22,14 +23,19 @@
   "author": "k8w",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/chai": "^4.1.4",
-    "@types/mocha": "^2.2.43",
-    "chai": "^4.1.2"
+    "@types/chai": "^4.1.7",
+    "chai": "^4.2.0",
+    "kunit": "^1.1.1",
+    "rollup": "^1.17.0",
+    "rollup-plugin-typescript2": "^0.22.0",
+    "rollup-plugin-uglify": "^6.0.2",
+    "typescript": "^3.5.3"
   },
   "typings": "index.d.ts",
   "dependencies": {
     "k8w-extend-native": "*",
     "k8w-super-promise": "*",
-    "tsrpc-protocol": "*"
+    "tsbuffer": "^1.1.2",
+    "tsrpc-proto": "*"
   }
 }

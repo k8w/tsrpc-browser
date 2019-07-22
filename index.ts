@@ -1,3 +1,5 @@
+import { BrowserHttpClient } from "./src/BrowserHttpClient";
+
 /**
  * TSRPC Browser Client
  * See TSRPC at https://github.com/k8w/tsrpc
@@ -6,6 +8,4 @@
  * @license Apache-2.0
  */
 
-import 'k8w-extend-native';
-import TsrpcClient from './src/TsrpcClient';
-export default TsrpcClient;
+export { BrowserHttpClient as TsrpcClient }
