@@ -7,8 +7,20 @@ import { MsgChat } from './proto/MsgChat';
 import { TsrpcError } from 'tsrpc-proto';
 
 let client = new BrowserHttpClient({
+    server: 'https://honghegame.cn/t2',
     proto: serviceProto
 });
+
+const output = document.getElementById('output')!;
+function log(...args: string[]) {
+    output.innerText += args.join(' ') + '\n';
+}
+log('Test Start!');
+
+let n = 0;
+function done() {
+    log(`√ Done: ${++n}`);
+}
 
 test('CallApi normally', async function () {
     // Succ
@@ -22,6 +34,7 @@ test('CallApi normally', async function () {
     }), {
             reply: 'a/b/c/Test reply: Req2'
         });
+    done();
 });
 
 test('Inner Error', async function () {
@@ -38,6 +51,7 @@ test('Inner Error', async function () {
                 info: 'INTERNAL_ERR'
             });
     }
+    done();
 })
 
 test('TsrpcError', async function () {
@@ -54,6 +68,7 @@ test('TsrpcError', async function () {
                 info: 'ErrInfo ' + v
             });
     }
+    done();
 })
 
 test('sendMsg', async function () {
@@ -65,6 +80,7 @@ test('sendMsg', async function () {
     };
 
     await client.sendMsg('Chat', msg);
+    done();
 })
 
 test('cancel', async function () {
@@ -83,11 +99,12 @@ test('cancel', async function () {
             rs();
         }, 100)
     })
+    done();
 })
 
 test('error', async function () {
     let client1 = new BrowserHttpClient({
-        server: 'http://localhost:80',
+        server: 'http://localhost:9999',
         proto: serviceProto
     })
 
@@ -97,10 +114,11 @@ test('error', async function () {
     })
     console.log(err1);
     assert.deepStrictEqual(err1!.info.isNetworkError, true);
+    done();
 })
 
 KUnit.instance.runAll().then(v => {
     let succ = v.children!.count(v => !!v.isSucc);
     let fail = v.children!.count(v => !v.isSucc);
-    document.writeln(`Done, succ=${succ}, fail=${fail}`);
+    log(`Finished, succ=${succ}, fail=${fail}`);
 });
