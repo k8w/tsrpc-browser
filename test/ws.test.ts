@@ -142,7 +142,7 @@ kunit.test('send/listen Msg', async function () {
         }, 1000);
     })
 
-    // client.unlistenMsg('Chat', handler);
+    client.unlistenMsg('Chat', handler);
     assert.deepStrictEqual(recved, [
         {
             channel: 111,

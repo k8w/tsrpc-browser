@@ -15,9 +15,9 @@ function getLogger(originalLogger: Logger, element: HTMLElement, prefix: string)
     return logger;
 }
 
-// kunit.logger = getLogger(kunit.logger, document.getElementById('http')!, '[HTTP]')
-// kunit.options.disableColorLog = true;
-// kunit.runAll();
+kunit.logger = getLogger(kunit.logger, document.getElementById('http')!, '[HTTP]')
+kunit.options.disableColorLog = true;
+kunit.runAll();
 
 kunitWs.logger = getLogger(kunitWs.logger, document.getElementById('ws')!, '[WS]')
 kunitWs.options.disableColorLog = true;
