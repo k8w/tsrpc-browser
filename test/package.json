@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server",
+    "dev": "START npm run dev:back & webpack-dev-server",
+    "dev:back": "cd server && onchange **/*.ts -i -v -- ts-node index.ts & cd ..",
     "test": "START npm run start:back & npm run start:front",
     "start:back": "cd server && ts-node index.ts & cd ..",
     "start:front": "npm run build && npx http-server dist -p 3001 -c-1 -o http://localhost:3001/index.html"

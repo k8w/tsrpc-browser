@@ -6,16 +6,16 @@ import { Counter } from './models/Counter';
 import { TransportDataUtil } from './models/TransportDataUtil';
 import SuperPromise from 'k8w-super-promise';
 
-export class BrowserHttpClient<ServiceType extends BaseServiceType = any> {
+export class HttpClient<ServiceType extends BaseServiceType = any> {
 
-    private _options: BrowserHttpClientOptions<ServiceType>;
+    private _options: HttpClientOptions<ServiceType>;
     serviceMap: ServiceMap;
     tsbuffer: TSBuffer;
     logger: Logger;
 
     private _snCounter = new Counter(1);
 
-    constructor(options?: Partial<BrowserHttpClientOptions<ServiceType>>) {
+    constructor(options?: Partial<HttpClientOptions<ServiceType>>) {
         this._options = Object.assign({}, defaultOptions, options);
         this.serviceMap = ServiceMapUtil.getServiceMap(this._options.proto);
         this.tsbuffer = new TSBuffer(this._options.proto.types);
@@ -71,7 +71,12 @@ export class BrowserHttpClient<ServiceType extends BaseServiceType = any> {
     protected _sendBuf(type: 'api' | 'msg', buf: Uint8Array, sn: number, options: TransportOptions = {}): SuperPromise<Uint8Array, TsrpcError> {
         let rs: Function, rj: Function, xhr: XMLHttpRequest, isAborted = false;
 
+        let timeout = options.timeout || this._options.timeout;
+        let timer: number | undefined;
+        let promiseRj: Function;
+
         let promise = new SuperPromise<Uint8Array, TsrpcError>(async (rs, rj) => {
+            promiseRj = rj;
             xhr = new XMLHttpRequest();
 
             if (navigator.userAgent.indexOf('MSIE 8.0;') > -1) {
@@ -112,7 +117,9 @@ export class BrowserHttpClient<ServiceType extends BaseServiceType = any> {
 
             xhr.open('POST', this._options.server, true);
             xhr.responseType = 'arraybuffer';
-            xhr.timeout = options.timeout || this._options.timeout;
+            if (timeout) {
+                xhr.timeout = timeout;
+            }
 
             xhr.send(buf);
         })
@@ -120,6 +127,31 @@ export class BrowserHttpClient<ServiceType extends BaseServiceType = any> {
         promise.onCancel(() => {
             isAborted = true;
             xhr.abort();
+        });
+
+        // Timeout Timer
+        if (timeout) {
+            timer = window.setTimeout(() => {
+                if (!promise.isCanceled && !promise.isDone) {
+                    this.logger.log(`[${type === 'api' ? 'ApiTimeout' : 'MsgTimeout'}] #${sn}`);
+                    promiseRj(new TsrpcError('Request Timeout', 'TIMEOUT'));
+                    xhr.abort();
+                }
+            }, timeout);
+        }
+        promise.then(v => {
+            if (timer) {
+                clearTimeout(timer);
+                timer = undefined;
+            }
+            return v;
+        });
+        promise.catch(e => {
+            if (timer) {
+                clearTimeout(timer);
+                timer = undefined;
+            }
+            throw e;
         })
 
         return promise;
@@ -144,19 +176,18 @@ export class BrowserHttpClient<ServiceType extends BaseServiceType = any> {
 
 }
 
-const defaultOptions: BrowserHttpClientOptions<any> = {
+const defaultOptions: HttpClientOptions<any> = {
     server: 'http://localhost:3000',
     proto: { types: {}, services: [] },
-    logger: console,
-    timeout: 30000
+    logger: console
 }
 
-export interface BrowserHttpClientOptions<ServiceType extends BaseServiceType> {
+export interface HttpClientOptions<ServiceType extends BaseServiceType> {
     server: string;
     proto: ServiceProto<ServiceType>;
     logger: Logger;
     /** API超时时间（毫秒） */
-    timeout: number;
+    timeout?: number;
 }
 
 export interface TransportOptions {

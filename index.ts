@@ -1,4 +1,4 @@
-import { BrowserHttpClient } from "./src/BrowserHttpClient";
+import { HttpClient } from "./src/HttpClient";
 
 /**
  * TSRPC Browser Client
@@ -8,4 +8,4 @@ import { BrowserHttpClient } from "./src/BrowserHttpClient";
  * @license Apache-2.0
  */
 
-export { BrowserHttpClient as TsrpcClient }
+export { HttpClient as TsrpcClient }

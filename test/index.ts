@@ -1,12 +1,12 @@
 import KUnit from 'kunit';
 import { test } from 'kunit';
 import { assert } from 'chai';
-import { BrowserHttpClient } from '../src/BrowserHttpClient';
+import { HttpClient } from '../src/HttpClient';
 import { serviceProto } from './proto/serviceProto';
 import { MsgChat } from './proto/MsgChat';
 import { TsrpcError } from 'tsrpc-proto';
 
-let client = new BrowserHttpClient({
+let client = new HttpClient({
     server: 'https://honghegame.cn/t2',
     proto: serviceProto
 });
@@ -103,7 +103,7 @@ test('cancel', async function () {
 })
 
 test('error', async function () {
-    let client1 = new BrowserHttpClient({
+    let client1 = new HttpClient({
         server: 'http://localhost:9999',
         proto: serviceProto
     })
@@ -114,6 +114,17 @@ test('error', async function () {
     })
     console.log(err1);
     assert.deepStrictEqual(err1!.info.isNetworkError, true);
+    done();
+})
+
+test('client timeout', async function () {
+    let client = new HttpClient({
+        timeout: 100,
+        proto: serviceProto
+    });
+    let result = await client.callApi('Test', { name: 'Timeout' }).catch(e => e);
+    assert.strictEqual(result.message, 'Request Timeout');
+    assert.strictEqual(result.info, 'TIMEOUT');
     done();
 })
 

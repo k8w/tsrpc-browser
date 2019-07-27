@@ -3,7 +3,7 @@ import { serviceProto } from '../proto/serviceProto';
 import * as path from "path";
 let server = new TsrpcServer({
     proto: serviceProto,
-    cors: '*'
+    cors: '*',
 })
 server.autoImplementApi(path.resolve(__dirname, 'api'));
 server.start();
