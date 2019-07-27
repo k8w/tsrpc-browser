@@ -5,6 +5,7 @@ import { TSBuffer } from 'tsbuffer';
 import { Counter } from './models/Counter';
 import { TransportDataUtil } from './models/TransportDataUtil';
 import SuperPromise from 'k8w-super-promise';
+import { TransportOptions } from './models/TransportOptions';
 
 export class HttpClient<ServiceType extends BaseServiceType = any> {
 
@@ -187,10 +188,5 @@ export interface HttpClientOptions<ServiceType extends BaseServiceType> {
     proto: ServiceProto<ServiceType>;
     logger: Logger;
     /** API超时时间（毫秒） */
-    timeout?: number;
-}
-
-export interface TransportOptions {
-    /** callApi超时时间（单位：毫秒） */
     timeout?: number;
 }

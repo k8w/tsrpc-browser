@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack",
     "dev": "START npm run dev:back & webpack-dev-server",
+    "dev:front": "webpack-dev-server",
     "dev:back": "cd server && onchange **/*.ts -i -v -- ts-node index.ts & cd ..",
     "test": "START npm run start:back & npm run start:front",
     "start:back": "cd server && ts-node index.ts & cd ..",
@@ -14,8 +15,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/chai": "^4.1.7",
+    "chai": "^4.2.0",
+    "kunit": "^1.2.2",
     "ts-loader": "^6.0.4",
-    "tsrpc": "^2.0.7",
+    "tsrpc": "^2.1.0",
     "webpack": "^4.36.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2"
