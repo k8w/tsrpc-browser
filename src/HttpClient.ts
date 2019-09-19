@@ -3,7 +3,7 @@ import { Logger } from './models/Logger';
 import { ServiceMap, ServiceMapUtil } from './models/ServiceMapUtil';
 import { TSBuffer } from 'tsbuffer';
 import { Counter } from './models/Counter';
-import { TransportDataUtil } from './models/TransportDataUtil';
+import { TransportDataUtil, ParsedServerOutput } from './models/TransportDataUtil';
 import SuperPromise from 'k8w-super-promise';
 import { TransportOptions } from './models/TransportOptions';
 
@@ -40,7 +40,14 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
         // Send
         return this._sendBuf('api', buf, sn, options).then(resBuf => {
             // Parsed res
-            let parsed = TransportDataUtil.parseServerOutout(this.tsbuffer, this.serviceMap, resBuf);
+            let parsed: ParsedServerOutput;
+            try {
+                parsed = TransportDataUtil.parseServerOutout(this.tsbuffer, this.serviceMap, resBuf);
+            }
+            catch (e) {
+                this.logger.log(`[ApiErr] #${sn}`, 'parse server output error', e);
+                throw e;
+            }
             if (parsed.type !== 'api') {
                 throw new TsrpcError('Invalid response', 'INTERNAL_ERR');
             }
