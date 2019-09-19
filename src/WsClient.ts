@@ -128,7 +128,7 @@ export class WsClient<ServiceType extends BaseServiceType = any> {
             let pending = this._pendingApi[parsed.sn];
             if (pending) {
                 delete this._pendingApi[parsed.sn];
-                if (parsed.isSucc === true) {
+                if (parsed.isSucc) {
                     this.logger.log(`[ApiRes] #${parsed.sn}`, parsed.res)
                     pending.rs(parsed.res);
                 }
