@@ -1,4 +1,4 @@
-TSRPC Browser
+TSRPC Browser 2.x
 ===
 
 `TSRPC` Client for browser
@@ -17,19 +17,4 @@ TSRPC Browser
 1. BinaryTransport only support IE10+/Chrome/Firefox
 
 ### Usage
-
-```
-npm install tsrpc-browser
-```
-
-```typescript
-import { TsrpcClient } from 'tsrpc-browser';
-import PtlHelloWorld from './protocol/PtlHelloWorld';
-
-let client = new TsrpcClient({ serverUrl: 'http://localhost:3000' })
-
-// The same with TSRPC NodeJS Client
-client.callApi(PtlHelloWorld, { name: 'k8w' }).then(res => {
-    console.log(res.reply); //Hello, k8w!
-})
-```
+[WIP]
