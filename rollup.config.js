@@ -18,6 +18,5 @@ export default {
         }),
         uglify()
 
-    ],
-    external: ['tslib']
+    ]
 }
