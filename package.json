@@ -1,6 +1,6 @@
 {
   "name": "tsrpc-browser",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "TSRPC Client for browser",
   "main": "index.js",
   "scripts": {
@@ -26,8 +26,8 @@
   "devDependencies": {
     "rollup": "^1.17.0",
     "rollup-plugin-typescript2": "^0.22.0",
-    "rollup-plugin-uglify": "^6.0.2",
-    "typescript": "^3.5.3"
+    "rollup-plugin-uglify": "^6.0.4",
+    "typescript": "^3.7.3"
   },
   "typings": "index.d.ts",
   "dependencies": {
