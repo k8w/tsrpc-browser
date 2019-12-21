@@ -175,7 +175,7 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
         let buf: ArrayBuffer = xhr.response;
         if (!buf) {
             this.logger.warn(`Response is empty, SN=${sn}`);
-            rj(new TsrpcError('Network Error', { isNetworkError: true, code: xhr.status }))
+            rj(new TsrpcError('Response is empty', { isServerError: true, code: 'EMPTY_RES', httpCode:xhr.status }))
             return;
         }
 
