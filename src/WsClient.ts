@@ -156,13 +156,13 @@ export class WsClient<ServiceType extends BaseServiceType = any> {
         this.logger.log(`[ApiReq] #${sn}`, apiName, req);
 
         if (!this._ws) {
-            throw new Error('Not connected')
+            throw new TsrpcError('Not connected', { isClientError: true })
         }
 
         // GetService
         let service = this.serviceMap.apiName2Service[apiName as string];
         if (!service) {
-            throw new Error('Invalid api name: ' + apiName);
+            throw new TsrpcError('Invalid api name: ' + apiName, { isClientError: true });
         }
 
         // Encode        
@@ -200,11 +200,7 @@ export class WsClient<ServiceType extends BaseServiceType = any> {
             timeoutTimer = setTimeout(() => {
                 if (this._pendingApi[sn]) {
                     this.logger.log(`[ApiTimeout] #${sn}`);
-                    let err: ApiError = {
-                        message: 'Request Timeout',
-                        info: 'TIMEOUT'
-                    }
-                    this._pendingApi[sn]!.rj(err);
+                    this._pendingApi[sn]!.rj(new TsrpcError('Request Timeout', { isNetworkError: true, code: 'TIMEOUT' }));
                 }
                 clear();
             }, timeout);
@@ -245,13 +241,13 @@ export class WsClient<ServiceType extends BaseServiceType = any> {
         this.logger.log('[SendMsg]', msgName, msg);
 
         if (!this._ws) {
-            throw new Error('Not connected')
+            throw new TsrpcError('Not connected', { isClientError: true })
         }
 
         // GetService
         let service = this.serviceMap.msgName2Service[msgName as string];
         if (!service) {
-            throw new Error('Invalid msg name: ' + msgName)
+            throw new TsrpcError('Invalid msg name: ' + msgName, { isClientError: true })
         }
 
         // Encode

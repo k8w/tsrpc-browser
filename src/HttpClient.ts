@@ -29,7 +29,7 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
         // GetService
         let service = this.serviceMap.apiName2Service[apiName as string];
         if (!service) {
-            throw new Error('Invalid api name: ' + apiName);
+            throw new TsrpcError('Invalid api name: ' + apiName, { isClientError: true });
         }
 
         // Encode
@@ -46,10 +46,10 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
             }
             catch (e) {
                 this.logger.log(`[ApiErr] #${sn}`, 'parse server output error', e);
-                throw e;
+                throw new TsrpcError('Parse server output error', { isServerError: true, innerError: e });
             }
             if (parsed.type !== 'api') {
-                throw new TsrpcError('Invalid response', 'INTERNAL_ERR');
+                throw new TsrpcError('Invalid response', { isServerError: true });
             }
             if (parsed.isSucc) {
                 this.logger.log(`[ApiRes] #${sn}`, parsed.res)
@@ -66,7 +66,7 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
         // GetService
         let service = this.serviceMap.msgName2Service[msgName as string];
         if (!service) {
-            throw new Error('Invalid msg name: ' + msgName);
+            throw new TsrpcError('Invalid msg name: ' + msgName, { isClientError: true });
         }
 
         let buf = TransportDataUtil.encodeMsg(this.tsbuffer, service, msg);
@@ -175,7 +175,7 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
         let buf: ArrayBuffer = xhr.response;
         if (!buf) {
             this.logger.warn(`Response is empty, SN=${sn}`);
-            rj(new TsrpcError('Response is empty', { isServerError: true, code: 'EMPTY_RES', httpCode:xhr.status }))
+            rj(new TsrpcError('Response is empty', { isServerError: true, code: 'EMPTY_RES', httpCode: xhr.status }))
             return;
         }
 
