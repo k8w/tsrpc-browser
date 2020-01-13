@@ -57,7 +57,7 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
             }
             else {
                 this.logger.log(`[ApiErr] #${sn}`, parsed.error)
-                throw parsed.error;
+                throw new TsrpcError(parsed.error.message, parsed.error.info);
             }
         })
     }

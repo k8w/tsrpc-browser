@@ -134,7 +134,7 @@ export class WsClient<ServiceType extends BaseServiceType = any> {
                 }
                 else {
                     this.logger.log(`[ApiErr] #${parsed.sn}`, parsed.error)
-                    pending.rj(parsed.error);
+                    pending.rj(new TsrpcError(parsed.error.message, parsed.error.info));
                 }
             }
             else {
