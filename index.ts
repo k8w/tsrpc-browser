@@ -1,4 +1,5 @@
 import { HttpClient } from "./src/HttpClient";
+import { TsrpcError } from "tsrpc-proto";
 
 /**
  * TSRPC Browser Client
@@ -9,3 +10,4 @@ import { HttpClient } from "./src/HttpClient";
  */
 
 export { HttpClient as TsrpcClient }
+export { TsrpcError }
