@@ -45,20 +45,23 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
                 parsed = TransportDataUtil.parseServerOutout(this.tsbuffer, this.serviceMap, resBuf);
             }
             catch (e) {
-                this.logger.log(`[ApiErr] #${sn}`, 'parse server output error', e);
+                this.logger.log(`[ApiErr] #${sn}`, apiName, 'parse server output error', e);
                 throw new TsrpcError('Parse server output error', { isServerError: true, innerError: e });
             }
             if (parsed.type !== 'api') {
                 throw new TsrpcError('Invalid response', { isServerError: true });
             }
             if (parsed.isSucc) {
-                this.logger.log(`[ApiRes] #${sn}`, parsed.res)
+                this.logger.log(`[ApiRes] #${sn}`, apiName, parsed.res)
                 return parsed.res;
             }
             else {
-                this.logger.log(`[ApiErr] #${sn}`, parsed.error)
+                this.logger.log(`[ApiErr] #${sn}`, apiName, parsed.error)
                 throw new TsrpcError(parsed.error.message, parsed.error.info);
             }
+        }).catch(e => {
+            this.logger.log(`[ApiErr] #${sn}`, apiName, e);
+            throw e;
         })
     }
 
@@ -145,8 +148,7 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
         if (timeout) {
             timer = window.setTimeout(() => {
                 if (!promise.isCanceled && !promise.isDone) {
-                    this.logger.log(`[${type === 'api' ? 'ApiTimeout' : 'MsgTimeout'}] #${sn}`);
-                    promiseRj(new TsrpcError('Request Timeout', 'TIMEOUT'));
+                    promiseRj(new TsrpcError('Network Error', { isNetworkError: true, code: 'TIMEOUT' }));
                     xhr.abort();
                 }
             }, timeout);
