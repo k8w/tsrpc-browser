@@ -115,7 +115,11 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
 
                 xhr.onerror = () => {
                     rj(new TsrpcError('Network Error', { isNetworkError: true, code: xhr.status }));
-                    return;
+                }
+
+                // 有的平台 超时不触发onerror
+                xhr.ontimeout = () => {
+                    rj(new TsrpcError('Network Error', { isNetworkError: true, code: 'TIMEOUT' }));
                 }
 
                 xhr.onload = async () => {
