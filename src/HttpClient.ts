@@ -60,6 +60,7 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
                 throw new TsrpcError(parsed.error.message, parsed.error.info);
             }
         }).catch(e => {
+            // 统一报错
             this.logger.log(`[ApiErr] #${sn}`, apiName, e);
             throw e;
         })
