@@ -45,18 +45,18 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
                 parsed = TransportDataUtil.parseServerOutout(this.tsbuffer, this.serviceMap, resBuf);
             }
             catch (e) {
-                this.logger.log(`[ApiErr] #${sn}`, apiName, 'parse server output error', e);
                 throw new TsrpcError('Parse server output error', { isServerError: true, innerError: e });
             }
             if (parsed.type !== 'api') {
                 throw new TsrpcError('Invalid response', { isServerError: true });
             }
+
+            // succ or error
             if (parsed.isSucc) {
                 this.logger.log(`[ApiRes] #${sn}`, apiName, parsed.res)
                 return parsed.res;
             }
             else {
-                this.logger.log(`[ApiErr] #${sn}`, apiName, parsed.error)
                 throw new TsrpcError(parsed.error.message, parsed.error.info);
             }
         }).catch(e => {

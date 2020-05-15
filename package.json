@@ -1,6 +1,6 @@
 {
   "name": "tsrpc-browser",
-  "version": "2.2.10",
+  "version": "2.2.11",
   "description": "TSRPC Client for browser",
   "main": "index.js",
   "scripts": {
