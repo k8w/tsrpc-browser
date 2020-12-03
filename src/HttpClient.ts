@@ -129,6 +129,12 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
                 xhr.onload = async () => {
                     this._resolveBufRes(xhr, sn, rs, rj);
                 }
+
+                if (options.onProgress) {
+                    xhr.upload.onprogress = e => {
+                        options.onProgress?.(e.loaded / e.total);
+                    }
+                }
             }
 
             xhr.open('POST', this._options.server, true);

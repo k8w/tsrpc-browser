@@ -1,5 +1,6 @@
 import { HttpClient } from "./src/HttpClient";
 import { TsrpcError } from "tsrpc-proto";
+import { WsClient } from './src/WsClient';
 
 /**
  * TSRPC Browser Client
@@ -9,5 +10,7 @@ import { TsrpcError } from "tsrpc-proto";
  * @license Apache-2.0
  */
 
-export { HttpClient as TsrpcClient }
-export { TsrpcError }
+export { HttpClient as TsrpcClient };
+export { HttpClient };
+export { WsClient };
+export { TsrpcError };
