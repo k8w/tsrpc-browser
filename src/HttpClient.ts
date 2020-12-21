@@ -61,7 +61,7 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
             }
         }).catch(e => {
             // 统一报错
-            this.logger.log(`[ApiErr] #${sn}`, apiName, e);
+            this.logger.log(`[ApiErr] #${sn}`, apiName, e?.message, e?.info);
             throw e;
         })
     }
