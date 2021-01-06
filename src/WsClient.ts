@@ -274,6 +274,12 @@ export interface WsClientOptions<ServiceType extends BaseServiceType> {
     onStatusChange?: (newStatus: WsClientStatus) => void;
     /** 掉线 */
     onLostConnection?: () => void;
+
+    // 加密选项
+    // encrypter?: (src: Uint8Array) => Uint8Array;
+    // decrypter?: (cipher: Uint8Array) => Uint8Array;
+    /** 为true时将会把buf信息打印在log中 */
+    // debugBuf?: boolean
 }
 
 export type WsClientStatus = 'open' | 'connecting' | 'closed';

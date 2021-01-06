@@ -83,6 +83,12 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
     protected _sendBuf(type: 'api' | 'msg', buf: Uint8Array, sn: number, options: TransportOptions = {}): SuperPromise<Uint8Array, TsrpcError> {
         let rs: Function, rj: Function, xhr: XMLHttpRequest, isAborted = false;
 
+        this._options.debugBuf && this.logger.debug('[SendBuf]', '#' + sn, buf);
+        if (this._options.encrypter) {
+            buf = this._options.encrypter(buf);
+        }
+        this._options.debugBuf && this.logger.debug('[EncryptedBuf]', '#' + sn, buf);
+
         let timeout = options.timeout || this._options.timeout;
         let timer: number | undefined;
         let promiseRj: Function;
@@ -185,14 +191,22 @@ export class HttpClient<ServiceType extends BaseServiceType = any> {
             return;
         }
 
-        let buf: ArrayBuffer = xhr.response;
-        if (!buf) {
+        let ab: ArrayBuffer = xhr.response;
+        if (!ab) {
             this.logger.warn(`Response is empty, SN=${sn}`);
             rj(new TsrpcError('Response is empty', { isServerError: true, code: 'EMPTY_RES', httpCode: xhr.status }))
             return;
         }
+        let buf = new Uint8Array(ab);
 
-        rs(new Uint8Array(buf));
+        // Decrypt
+        this._options.debugBuf && this.logger.debug('[RecvBuf]', '#' + sn, buf);
+        if (this._options.decrypter) {
+            buf = this._options.decrypter(buf);
+        }
+        this._options.debugBuf && this.logger.debug('[DecryptedBuf]', '#' + sn, buf);
+
+        rs(buf);
     }
 
 }
@@ -209,4 +223,10 @@ export interface HttpClientOptions<ServiceType extends BaseServiceType> {
     logger: Logger;
     /** API超时时间（毫秒） */
     timeout?: number;
+
+    // 加密选项
+    encrypter?: (src: Uint8Array) => Uint8Array;
+    decrypter?: (cipher: Uint8Array) => Uint8Array;
+    /** 为true时将会把buf信息打印在log中 */
+    debugBuf?: boolean
 }
