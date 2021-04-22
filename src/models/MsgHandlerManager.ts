@@ -1,17 +1,12 @@
-import { Logger } from './Logger';
-export class HandlerManager {
+import { Logger } from "tsrpc-proto";
+
+export class MsgHandlerManager {
     private _handlers: { [key: string]: Function[] | undefined } = {}
-
-    logger: Logger;
-
-    constructor(logger: Logger) {
-        this.logger = logger;
-    }
 
     /**
      * @return handlers count
      */
-    forEachHandler(key: string, ...args: any[]): (any | Promise<any>)[] {
+    forEachHandler(key: string, logger: Logger | undefined, ...args: any[]): (any | Promise<any>)[] {
         let handlers = this._handlers[key];
         if (!handlers) {
             return [];
@@ -23,7 +18,7 @@ export class HandlerManager {
                 output.push(handler(...args));
             }
             catch (e) {
-                this.logger.error('MsgHandlerError', e);
+                logger?.error('[MsgHandlerError]', e);
             }
         }
         return output;
@@ -51,7 +46,7 @@ export class HandlerManager {
 
         // 未指定handler，删除所有handler
         if (!handler) {
-            delete this._handlers[key];
+            this._handlers[key] = undefined;
             return;
         }
 
