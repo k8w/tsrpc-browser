@@ -1,5 +1,5 @@
 import { EncodeOutput } from "tsbuffer";
-import { BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType } from "tsrpc-proto";
+import { ApiReturn, BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType } from "tsrpc-proto";
 import { BaseClient, BaseClientOptions, defaultBaseClientOptions, PendingApiItem } from "./models/BaseClient";
 import { ApiService, MsgService } from "./models/ServiceMapUtil";
 import { TransportDataUtil } from "./models/TransportDataUtil";
@@ -87,7 +87,22 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<
                             })
                             return;
                         }
-                        this._onXhrRes(xhr, rs, pendingApiItem);
+
+                        //IE9 wrongURL 会返回12029
+                        if (xhr.status == 12029) {
+                            rs({
+                                err: new TsrpcError({
+                                    message: 'Network Error',
+                                    type: TsrpcErrorType.NetworkError,
+                                    httpCode: xhr.status
+                                })
+                            })
+                            return;
+                        }
+
+                        // Res
+                        rs({});
+                        pendingApiItem && this._onApiRes(xhr, pendingApiItem);
                     }
                 }
             }
@@ -113,8 +128,14 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<
                     });
                 }
 
-                xhr.onload = async () => {
-                    this._onXhrRes(xhr, rs, pendingApiItem);
+                if (pendingApiItem) {
+                    xhr.onload = async () => {
+                        this._onApiRes(xhr, pendingApiItem);
+                    }
+                }
+
+                xhr.onloadend = () => {
+                    rs({});
                 }
 
                 if (options.onProgress) {
@@ -124,7 +145,9 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<
                 }
             }
             xhr.open('POST', this.options.server, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
+            if (this.options.json) {
+                xhr.setRequestHeader('Content-Type', 'application/json');
+            }
             xhr.responseType = this.options.json ? 'text' : 'arraybuffer';
             let timeout = options.timeout ?? this.options.timeout;
             if (timeout) {
@@ -149,43 +172,48 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<
         return promise;
     }
 
-    private async _onXhrRes(xhr: XMLHttpRequest, rs: (ret: { err?: TsrpcError }) => void, pendingApiItem?: PendingApiItem) {
-        //IE9 wrongURL 会返回12029
-        if (xhr.status == 12029) {
-            rs({
-                err: new TsrpcError({
-                    message: 'Network Error',
-                    type: TsrpcErrorType.NetworkError,
-                    httpCode: xhr.status
-                })
-            })
-            return;
-        }
-
-        // sendMsg not parse res
-        if (!pendingApiItem) {
-            rs({});
-            return;
-        }
-
+    private async _onApiRes(xhr: XMLHttpRequest, pendingApiItem: PendingApiItem) {
         // JSON
         if (this.options.json) {
-            
+            let retStr = xhr.responseText;
+            let ret: ApiReturn<any>;
+            try {
+                ret = JSON.parse(retStr);
+            }
+            catch (e) {
+                ret = {
+                    isSucc: false,
+                    err: {
+                        message: retStr,
+                        type: TsrpcErrorType.ServerError
+                    }
+                }
+            }
+            if (ret.isSucc) {
+                if (this.options.jsonPrune) {
+                    let opPrune = this.tsbuffer.prune(ret.res, pendingApiItem.service.resSchemaId);
+                    if (opPrune.isSucc) {
+                        ret.res = opPrune.pruneOutput;
+                    }
+                    else {
+                        ret = {
+                            isSucc: false,
+                            err: new TsrpcError('Invalid Server Output', {
+                                type: TsrpcErrorType.ClientError,
+                                innerErr: opPrune.errMsg
+                            })
+                        }
+                    }
+                }
+            }
+            else {
+                ret.err = new TsrpcError(ret.err);
+            }
+            pendingApiItem.onReturn?.(ret);
         }
         // ArrayBuffer
         else {
             let ab: ArrayBuffer = xhr.response;
-            if (!ab) {
-                rs({
-                    err: new TsrpcError({
-                        message: 'Response is empty',
-                        type: TsrpcErrorType.ServerError,
-                        code: 'EMPTY_RES',
-                        httpCode: xhr.status
-                    })
-                })
-                return;
-            }
             let buf = new Uint8Array(ab);
             this._onRecvBuf(buf, pendingApiItem);
         }

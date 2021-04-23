@@ -1,24 +1,22 @@
-import { TsrpcServer, TsrpcServerWs, consoleColorLogger } from 'tsrpc';
-import { serviceProto } from '../proto/serviceProto';
 import * as path from "path";
-import { PrefixLogger } from '../../src/models/Logger';
-let server = new TsrpcServer({
-    proto: serviceProto,
+import { HttpServer, PrefixLogger, TerminalColorLogger, WsServer } from 'tsrpc';
+import { serviceProto } from '../proto/serviceProto';
+let server = new HttpServer(serviceProto, {
     cors: '*',
+    port: 3000,
     logger: new PrefixLogger({
-        logger: consoleColorLogger,
-        prefix: '[HTTP]'
+        logger: new TerminalColorLogger(),
+        prefixs: ['[HTTP]']
     })
 })
 server.autoImplementApi(path.resolve(__dirname, 'api'));
 server.start();
 
-let wsServer = new TsrpcServerWs({
+let wsServer = new WsServer(serviceProto, {
     port: 4000,
-    proto: serviceProto,
     logger: new PrefixLogger({
-        logger: consoleColorLogger,
-        prefix: '[WS]'
+        logger: new TerminalColorLogger(),
+        prefixs: ['[WS]']
     })
 })
 wsServer.autoImplementApi(path.resolve(__dirname, 'api'));
@@ -37,7 +35,7 @@ wsServer.listenMsg('Chat', async call => {
         });
     }, 200);
 
-    await new Promise(rs => {
+    await new Promise<void>(rs => {
         setTimeout(() => {
             rs();
         }, 1000)

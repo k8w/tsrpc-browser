@@ -5,7 +5,9 @@ export async function ApiTest(call: any) {
         throw new Error('a/b/c/Test InnerError')
     }
     else if (call.req.name === 'TsrpcError') {
-        throw new TsrpcError('a/b/c/Test TsrpcError', 'ErrInfo a/b/c/Test');
+        throw new TsrpcError('a/b/c/Test TsrpcError', {
+            info: 'ErrInfo a/b/c/Test'
+        });
     }
     else {
         call.succ({
