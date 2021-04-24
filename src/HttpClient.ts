@@ -6,16 +6,17 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<
 
     readonly type = 'SHORT';
 
+    private _jsonServer: string;
+
     readonly options!: HttpClientOptions;
     constructor(proto: ServiceProto<ServiceType>, options?: Partial<HttpClientOptions>) {
         super(proto, {
             ...defaultHttpClientOptions,
             ...options
         });
+        this._jsonServer = this.options.server + (this.options.server.endsWith('/') ? '' : '/');
         this.logger?.log('TSRPC HTTP Client :', this.options.server);
     }
-
-    lastReceivedBuf?: Uint8Array;
 
     protected _encodeApiReq(service: ApiService, req: any, pendingItem: PendingApiItem): EncodeOutput {
         if (this.options.json) {
@@ -141,7 +142,7 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<
                     }
                 }
             }
-            xhr.open('POST', this.options.server, true);
+            xhr.open('POST', this.options.json ? this._jsonServer + this.serviceMap.id2Service[serviceId].name : this.options.server, true);
             if (this.options.json) {
                 xhr.setRequestHeader('Content-Type', 'application/json');
             }
@@ -181,8 +182,9 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<
                 ret = {
                     isSucc: false,
                     err: {
-                        message: retStr,
-                        type: TsrpcErrorType.ServerError
+                        message: e.message,
+                        type: TsrpcErrorType.ServerError,
+                        responseText: retStr
                     }
                 }
             }
