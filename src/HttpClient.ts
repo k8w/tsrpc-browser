@@ -1,9 +1,7 @@
-import { EncodeOutput } from "tsbuffer";
-import { ApiReturn, BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType } from "tsrpc-proto";
-import { BaseClient, BaseClientOptions, defaultBaseClientOptions, PendingApiItem } from "./models/BaseClient";
-import { ApiService, MsgService } from "./models/ServiceMapUtil";
-import { TransportDataUtil } from "./models/TransportDataUtil";
-import { TransportOptions } from "./models/TransportOptions";
+import { EncodeOutput } from 'tsbuffer';
+import { ApiService, BaseClient, BaseClientOptions, defaultBaseClientOptions, MsgService, PendingApiItem, TransportDataUtil, TransportOptions } from "tsrpc-base-client";
+import { BaseServiceType, ServiceProto, TsrpcError } from 'tsrpc-proto';
+import { ApiReturn, TsrpcErrorType } from ".";
 
 export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<ServiceType> {
 
@@ -58,7 +56,7 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<
         }
     }
 
-    protected async _sendBuf(buf: Uint8Array, options: TransportOptions, serviceId: number, pendingApiItem?: PendingApiItem): Promise<{ err?: TsrpcError | undefined; }> {
+    protected async _sendBuf(buf: Uint8Array, options: HttpClientTransportOptions, serviceId: number, pendingApiItem?: PendingApiItem): Promise<{ err?: TsrpcError | undefined; }> {
         let sn = pendingApiItem?.sn;
         let promise = new Promise<{ err?: TsrpcError | undefined; }>(async rs => {
             // Pre Flow
@@ -226,6 +224,14 @@ const defaultHttpClientOptions: HttpClientOptions = {
     server: 'http://localhost:3000',
     json: false,
     jsonPrune: true
+}
+
+export interface HttpClientTransportOptions extends TransportOptions {
+    /**
+     * Data send progress
+     * @param ratio - 0~1
+     */
+    onProgress: (ratio: number) => void;
 }
 
 export interface HttpClientOptions extends BaseClientOptions {

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "dev": "START npm run dev:back & webpack-dev-server",
-    "dev:front": "webpack-dev-server",
+    "dev:front": "npx webpack serve --mode=development",
     "dev:back": "cd server && onchange **/*.ts -i -v -- ts-node index.ts & cd ..",
     "test": "START npm run start:back & npm run start:front",
     "start:back": "cd server && ts-node index.ts & cd ..",
@@ -18,13 +18,14 @@
     "@types/chai": "^4.1.7",
     "chai": "^4.2.0",
     "kunit": "^1.2.2",
-    "ts-loader": "^6.0.4",
-    "tsrpc": "^3.0.0-dev.2",
-    "webpack": "^4.36.1",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.7.2"
+    "ts-loader": "^9.1.1",
+    "tsrpc": "^3.0.0-dev.3",
+    "webpack": "^5.35.1",
+    "webpack-cli": "^4.6.0"
   },
   "devDependencies": {
-    "http-server": "^0.11.1"
+    "html-webpack-plugin": "^5.3.1",
+    "http-server": "^0.11.1",
+    "webpack-dev-server": "^3.11.2"
   }
 }

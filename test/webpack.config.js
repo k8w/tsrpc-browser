@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: ['./index.ts'],
@@ -20,6 +21,9 @@ module.exports = {
             }
         ]
     },
+    plugins: [new HtmlWebpackPlugin({
+        template: 'index.html'
+    })],
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),
         inline: false
