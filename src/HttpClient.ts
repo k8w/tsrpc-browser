@@ -1,7 +1,6 @@
 import { EncodeOutput } from 'tsbuffer';
 import { ApiService, BaseClient, BaseClientOptions, defaultBaseClientOptions, MsgService, PendingApiItem, TransportDataUtil, TransportOptions } from "tsrpc-base-client";
-import { BaseServiceType, ServiceProto, TsrpcError } from 'tsrpc-proto';
-import { ApiReturn, TsrpcErrorType } from ".";
+import { BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType, ApiReturn } from 'tsrpc-proto';
 
 export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<ServiceType> {
 
