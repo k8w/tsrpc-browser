@@ -1,4 +1,6 @@
 import 'k8w-extend-native';
-export { HttpClient, HttpClient as TsrpcClient } from "./HttpClient";
-export { WsClient } from './WsClient';
-
+export { HttpClient, HttpClientOptions } from "./HttpClient";
+export { ApiReturnFlowData, CallApiFlowData, SendMsgFlowData } from './models/ClientFlowData';
+export { Flow } from './models/Flow';
+export { TransportOptions } from './models/TransportOptions';
+export { WsClient, WsClientOptions } from './WsClient';
