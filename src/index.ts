@@ -4,3 +4,4 @@ export { ApiReturnFlowData, CallApiFlowData, SendMsgFlowData } from './models/Cl
 export { Flow } from './models/Flow';
 export { TransportOptions } from './models/TransportOptions';
 export { WsClient, WsClientOptions } from './WsClient';
+export { TsrpcError, Logger } from 'tsrpc-proto';
