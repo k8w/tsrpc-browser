@@ -1,7 +1,8 @@
 // import { kunit as kunitWs } from "./ws.test";
 import { Logger } from "kunit/src/Logger";
-import { kunit } from "./http.test";
-import { kunit as kunitWs } from "./WS.test";
+import { kunit as httpCase } from "./http.test";
+import { kunit as httpJsonCase } from "./httpJSON.test";
+import { kunit as wsCase } from "./WS.test";
 
 function getLogger(originalLogger: Logger, element: HTMLElement, prefix: string) {
     let logger = (['debug', 'log', 'warn', 'error'] as const).reduce((prev, next) => {
@@ -18,12 +19,16 @@ function getLogger(originalLogger: Logger, element: HTMLElement, prefix: string)
 }
 
 async function main() {
-    kunit.logger = getLogger(kunit.logger, document.getElementById('http')!, '[HTTP]')
-    await kunit.runAll();
+    httpCase.logger = getLogger(httpCase.logger, document.getElementById('http')!, '[HTTP]')
+    await httpCase.runAll();
     document.querySelector('#http>h2>small')?.remove();
 
-    kunitWs.logger = getLogger(kunitWs.logger, document.getElementById('ws')!, '[WS]')
-    await kunitWs.runAll();
+    httpJsonCase.logger = getLogger(httpJsonCase.logger, document.getElementById('httpJSON')!, '[HTTP JSON]')
+    await httpJsonCase.runAll();
+    document.querySelector('#httpJSON>h2>small')?.remove();
+
+    wsCase.logger = getLogger(wsCase.logger, document.getElementById('ws')!, '[WS]')
+    await wsCase.runAll();
     document.querySelector('#ws>h2>small')?.remove();
 }
 main();

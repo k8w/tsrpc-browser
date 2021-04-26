@@ -7,9 +7,9 @@
     "build": "webpack",
     "dev": "START npm run dev:back & webpack-dev-server",
     "dev:front": "npx webpack serve --mode=development",
-    "dev:back": "cd server && onchange **/*.ts -i -v -- ts-node index.ts & cd ..",
+    "dev:back": "cd server && npx onchange **/*.ts -i -v -- npx ts-node index.ts & cd ..",
     "test": "START npm run start:back & npm run start:front",
-    "start:back": "cd server && ts-node index.ts & cd ..",
+    "start:back": "cd server && npx ts-node index.ts & cd ..",
     "start:front": "npm run build && npx http-server dist -p 3001 -c-1 -o http://localhost:3001/index.html"
   },
   "author": "",
@@ -24,8 +24,11 @@
     "webpack-cli": "^4.6.0"
   },
   "devDependencies": {
+    "@types/node": "^14.14.41",
     "html-webpack-plugin": "^5.3.1",
     "http-server": "^0.11.1",
+    "onchange": "^7.1.0",
+    "ts-node": "^9.1.1",
     "webpack-dev-server": "^3.11.2"
   }
 }

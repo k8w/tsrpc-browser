@@ -7,7 +7,8 @@ let server = new HttpServer(serviceProto, {
     logger: new PrefixLogger({
         logger: new TerminalColorLogger(),
         prefixs: ['[HTTP]']
-    })
+    }),
+    jsonEnabled: true
 })
 server.autoImplementApi(path.resolve(__dirname, 'api'));
 server.start();

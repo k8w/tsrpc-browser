@@ -9,7 +9,7 @@
         html,body{
             background: #e5e5e5;
         }
-        #http, #ws {
+        #http, #httpJSON, #ws {
             margin: 20px;
             background: white;
             padding: 20px;
@@ -17,7 +17,7 @@
             border: solid 1px #ccc;
             line-height: 1.5em;
         }
-        #http >*, #ws >* {
+        #http >*, #ws >*, #httpJSON >* {
             display: block;
             white-space: pre;
         }
@@ -40,6 +40,9 @@
     <h1>TSRPC Browser Test</h1>
     <div id="http">
         <h2>HTTP<small> (Running...)</small></h2>
+    </div>
+    <div id="httpJSON">
+        <h2>HTTP JSON<small> (Running...)</small></h2>
     </div>
     <div id="ws">
         <h2>WebSocket<small> (Running...)</small></h2>
