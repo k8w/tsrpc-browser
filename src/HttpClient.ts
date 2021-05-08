@@ -9,7 +9,6 @@ import { ApiReturn, BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType } 
  */
 export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<ServiceType> {
 
-    /** @internal */
     readonly type = 'SHORT';
 
     private _jsonServer: string;

@@ -8,7 +8,6 @@ import { BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType } from "tsrpc
  */
 export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<ServiceType> {
 
-    /** @internal */
     readonly type = 'LONG';
 
     readonly options!: WsClientOptions;
