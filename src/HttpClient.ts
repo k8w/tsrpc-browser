@@ -1,9 +1,15 @@
 import { EncodeOutput } from 'tsbuffer';
 import { ApiService, BaseClient, BaseClientOptions, defaultBaseClientOptions, MsgService, PendingApiItem, TransportDataUtil, TransportOptions } from "tsrpc-base-client";
-import { BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType, ApiReturn } from 'tsrpc-proto';
+import { ApiReturn, BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType } from 'tsrpc-proto';
 
+/**
+ * HTTP Client for TSRPC.
+ * It uses XMLHttpRequest to send requests.
+ * @typeParam ServiceType - `ServiceType` from generated `proto.ts`
+ */
 export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<ServiceType> {
 
+    /** @internal */
     readonly type = 'SHORT';
 
     private _jsonServer: string;
@@ -229,24 +235,25 @@ const defaultHttpClientOptions: HttpClientOptions = {
 
 export interface HttpClientTransportOptions extends TransportOptions {
     /**
-     * Data send progress
+     * Event when progress of data sent is changed
      * @param ratio - 0~1
      */
     onProgress: (ratio: number) => void;
 }
 
 export interface HttpClientOptions extends BaseClientOptions {
-    /** Server URL */
+    /** Server URL, starts with `http://` or `https://`. */
     server: string;
 
     /** 
-     * Use JSON instead of Buffer
+     * Use JSON instead of binary as transfering
      * @defaultValue false
      */
     json: boolean;
     /**
-     * 是否剔除协议中未定义的多余字段
-     * 默认为 `true`
+     * Whether to automatically delete excess properties that not defined in the protocol.
+     * @defaultValue `true`
+     * @internal
      */
     jsonPrune: boolean;
 }

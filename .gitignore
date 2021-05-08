@@ -4,3 +4,4 @@ logs
 yarn.lock
 package-lock.json
 .rpt2_cache
+temp

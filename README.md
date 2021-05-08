@@ -1,20 +1,21 @@
-TSRPC Browser 2.x
-===
+# Browser Client of TSRPC
 
-`TSRPC` Client for browser
+> A TypeScript RPC framework with runtime type checking and binary serialization.
+See more detail at [https://github.com/k8w/tsrpc](https://github.com/k8w/tsrpc).
 
-> `TSRPC` is a full-stack rpc framework in TypeScript, see it at [https://github.com/k8w/tsrpc](https://github.com/k8w/tsrpc)
+## Introduction
+`HttpClient` is using `XMLHttpRequest`, and `WebSocketClient` is using `WebSocket` of browser. 
+Platform adapted to `XMLHttpRequest` and `WebSocket` (like `ReactNative`) can also use this library.
 
-### Features
-1. Full stack in TypeScript
-1. Strong type check
-1. No URL conern
-1. Support both text and binary transport
-1. Suppport customized transport encryption
-
-### Browser Support
-1. Support IE8+, Chrome, Firefox
-1. BinaryTransport only support IE10+/Chrome/Firefox
-
-### Usage
+## Usage
 [WIP]
+
+## Browser Support
+The library is compiled to target `ES2015`, so if you need legacy browser support, you can use Babel to transform the final code to `ES5`. After that it can support all these browser:
+- IE8+
+- Chrome
+- Firefox
+- Safari
+- etc...
+
+> WebSocket only support IE10+.

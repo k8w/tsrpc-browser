@@ -1,8 +1,14 @@
 import { BaseClient, TransportOptions, PendingApiItem, defaultBaseClientOptions, BaseClientOptions } from "tsrpc-base-client";
 import { BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType } from "tsrpc-proto";
 
+/**
+ * WebSocket Client for TSRPC.
+ * It uses native `WebSocket` of browser.
+ * @typeParam ServiceType - `ServiceType` from generated `proto.ts`
+ */
 export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<ServiceType> {
 
+    /** @internal */
     readonly type = 'LONG';
 
     readonly options!: WsClientOptions;
@@ -56,6 +62,10 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
     private _ws?: WebSocket;
 
     private _promiseConnect?: Promise<{ isSucc: true } | { isSucc: false, errMsg: string }>;
+    /**
+     * Connect to the server
+     * @throws never
+     */
     async connect(): Promise<{ isSucc: true } | { isSucc: false, errMsg: string }> {
         // 已连接中
         if (this._promiseConnect) {
@@ -134,6 +144,10 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
     }
 
     private _rsDisconnecting?: () => void;
+    /**
+     * Disconnect immediately
+     * @throws never
+     */
     async disconnect() {
         // 连接不存在
         if (!this._ws) {
@@ -155,13 +169,13 @@ const defaultWsClientOptions: WsClientOptions = {
 }
 
 export interface WsClientOptions extends BaseClientOptions {
-    /** Server URL */
+    /** Server URL, starts with `ws://` or `wss://`. */
     server: string;
 
     // Events
-    /** 连接状态变化事件 */
+    /** Event when connection status is changed */
     onStatusChange?: (newStatus: WsClientStatus) => void;
-    /** 掉线（非人为断开连接） */
+    /** Event when the connection is closed accidently (not manually closed). */
     onLostConnection?: () => void;
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "tsrpc-browser",
-  "version": "3.0.0-dev.0",
+  "version": "3.0.0-dev.1",
   "description": "TSRPC Client for browser",
   "main": "index.js",
   "scripts": {
@@ -8,10 +8,10 @@
     "test": "cd test && npm test & cd ..",
     "dev": "cd test && npm run dev & cd..",
     "coverage": "nyc mocha test/**/*.test.ts && start coverage\\index.html",
-    "build": "npm run build:js && npm run build:dts && npm run build:doc && cp package.json LICENSE README.md dist/",
+    "build": "npm run build:js && npm run build:dts && cp package.json LICENSE README.md dist/",
     "build:js": "rm -rf dist && npx rollup -c",
     "build:dts": "rm -rf lib && npx tsc && npx api-extractor run --local --verbose && node scripts/removePrivate.js && rm -rf lib",
-    "build:doc": "rm -rf docs/references && npx api-documenter markdown --input temp --output docs/references"
+    "build:doc": "rm -rf docs/api && npx api-documenter markdown --input temp --output docs/api"
   },
   "repository": {
     "type": "git",
@@ -33,17 +33,17 @@
     "fullts"
   ],
   "author": "k8w",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.13.1",
-    "@microsoft/api-extractor": "^7.14.0",
-    "rollup": "^2.45.2",
+    "@microsoft/api-documenter": "^7.13.6",
+    "@microsoft/api-extractor": "^7.15.1",
+    "rollup": "^2.47.0",
     "rollup-plugin-typescript2": "^0.22.0",
     "tslib": "^2.2.0",
     "typescript": "^4.2.4"
   },
   "typings": "index.d.ts",
   "dependencies": {
-    "tsrpc-base-client": "^1.0.2-dev.5"
+    "tsrpc-base-client": "^1.0.2-dev.15"
   }
 }

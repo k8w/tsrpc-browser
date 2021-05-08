@@ -10,7 +10,8 @@
     "dev:back": "cd server && npx onchange **/*.ts -i -v -- npx ts-node index.ts & cd ..",
     "test": "START npm run start:back & npm run start:front",
     "start:back": "cd server && npx ts-node index.ts & cd ..",
-    "start:front": "npm run build && npx http-server dist -p 3001 -c-1 -o http://localhost:3001/index.html"
+    "start:front": "npm run build && npx http-server dist -p 3001 -c-1 -o http://localhost:3001/index.html",
+    "proto": "npx tsrpc-cli proto -i proto -o proto/serviceProto.ts"
   },
   "author": "",
   "license": "ISC",
@@ -19,7 +20,7 @@
     "chai": "^4.2.0",
     "kunit": "^1.2.2",
     "ts-loader": "^9.1.1",
-    "tsrpc": "^3.0.0-dev.3",
+    "tsrpc": "^3.0.0-dev.5",
     "webpack": "^5.35.1",
     "webpack-cli": "^4.6.0"
   },
