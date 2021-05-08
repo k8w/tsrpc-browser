@@ -24,6 +24,7 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<
         this.logger?.log('TSRPC HTTP Client :', this.options.server);
     }
 
+    /** @internal */
     protected _encodeApiReq(service: ApiService, req: any, pendingItem: PendingApiItem): EncodeOutput {
         if (this.options.json) {
             if (this.options.jsonPrune) {
@@ -43,6 +44,7 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseClient<
         }
     }
 
+    /** @internal */
     protected _encodeClientMsg(service: MsgService, msg: any): EncodeOutput {
         if (this.options.json) {
             if (this.options.jsonPrune) {
