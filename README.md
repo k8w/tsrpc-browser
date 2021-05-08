@@ -1,6 +1,6 @@
 # Browser Client of TSRPC
 
-> A TypeScript RPC framework with runtime type checking and binary serialization.
+> TSRPC is a TypeScript RPC framework with runtime type checking and binary serialization.
 See more detail at [https://github.com/k8w/tsrpc](https://github.com/k8w/tsrpc).
 
 ## Introduction

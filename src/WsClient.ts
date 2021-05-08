@@ -62,7 +62,7 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
 
     private _promiseConnect?: Promise<{ isSucc: true } | { isSucc: false, errMsg: string }>;
     /**
-     * Connect to the server
+     * Start connecting, you must connect first before `callApi()` and `sendMsg()`.
      * @throws never
      */
     async connect(): Promise<{ isSucc: true } | { isSucc: false, errMsg: string }> {
