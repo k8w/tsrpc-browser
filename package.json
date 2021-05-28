@@ -1,6 +1,6 @@
 {
   "name": "tsrpc-browser",
-  "version": "3.0.0-dev.4",
+  "version": "3.0.0-dev.5",
   "description": "TSRPC Client for browser",
   "main": "index.cjs",
   "exports": {
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "pretest": "cd test && npm i & cd ..",
-    "test": "cd test && npm test & cd ..",
+    "test": "cd test && npm i && npm test & cd ..",
     "dev": "cd test && npm run dev & cd..",
     "coverage": "nyc mocha test/**/*.test.ts && start coverage\\index.html",
     "build": "npm run build:js && npm run build:dts && cp package.json LICENSE README.md dist/",
@@ -48,6 +48,6 @@
   },
   "typings": "index.d.ts",
   "dependencies": {
-    "tsrpc-base-client": "^1.0.2-dev.17"
+    "tsrpc-base-client": "^1.0.2-dev.18"
   }
 }

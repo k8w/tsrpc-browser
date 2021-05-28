@@ -20,7 +20,7 @@
     "chai": "^4.2.0",
     "kunit": "^1.2.2",
     "ts-loader": "^9.1.1",
-    "tsrpc": "^3.0.0-dev.5",
+    "tsrpc": "^3.0.0-dev.8",
     "webpack": "^5.35.1",
     "webpack-cli": "^4.6.0"
   },
