@@ -6,3 +6,4 @@ package-lock.json
 .rpt2_cache
 temp
 lib
+.ds_store

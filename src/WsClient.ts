@@ -1,4 +1,4 @@
-import { BaseClient, TransportOptions, PendingApiItem, defaultBaseClientOptions, BaseClientOptions } from "tsrpc-base-client";
+import { BaseClient, BaseClientOptions, defaultBaseClientOptions, PendingApiItem, TransportOptions } from "tsrpc-base-client";
 import { BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType } from "tsrpc-proto";
 
 /**
@@ -6,7 +6,7 @@ import { BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType } from "tsrpc
  * It uses native `WebSocket` of browser.
  * @typeParam ServiceType - `ServiceType` from generated `proto.ts`
  */
-export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<ServiceType> {
+export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<ServiceType, WsClientEventData> {
 
     readonly type = 'LONG';
 
@@ -86,7 +86,7 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
                 this._ws = ws;
                 this.logger?.log('Connected succ');
                 rs({ isSucc: true });
-                this.options.onStatusChange?.(WsClientStatus.Opened);
+                this.emit('StatusChange', { newStatus: WsClientStatus.Opened });
             };
 
             ws.onerror = e => {
@@ -102,6 +102,11 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
             }
 
             ws.onclose = e => {
+                // 清空WebSocket Listener
+                ws.onopen = ws.onclose = ws.onmessage = ws.onerror = null;
+                this._ws = undefined;
+
+                let isFromConnecting = !!this._promiseConnect;
                 if (this._promiseConnect) {
                     this._promiseConnect = undefined;
                     rs({
@@ -110,11 +115,7 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
                     });
                 }
 
-                // 清空WebSocket Listener
-                ws.onopen = ws.onclose = ws.onmessage = ws.onerror = null;
-                this._ws = undefined;
-
-                this.options.onStatusChange?.(WsClientStatus.Closed);
+                this.emit('StatusChange', { newStatus: WsClientStatus.Closed });
 
                 if (this._rsDisconnecting) {
                     this._rsDisconnecting();
@@ -122,9 +123,9 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
                     this.logger?.log('Disconnected succ', `code=${e.code} reason=${e.reason}`);
                 }
                 // 已连接上 非主动关闭 触发掉线
-                else {
+                else if (!isFromConnecting) {
                     this.logger?.log(`Lost connection to ${this.options.server}`, `code=${e.code} reason=${e.reason}`);
-                    this.options.onLostConnection?.();
+                    this.emit('LostConnection', undefined);
                 }
             };
         })
@@ -138,7 +139,7 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
             }
         }
 
-        this.options.onStatusChange?.(WsClientStatus.Opening);
+        this.emit('StatusChange', { newStatus: WsClientStatus.Opening });
         return this._promiseConnect;
     }
 
@@ -154,7 +155,7 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
         }
 
         this.logger?.log('Disconnecting...');
-        this.options.onStatusChange?.(WsClientStatus.Closing);
+        this.emit('StatusChange', { newStatus: WsClientStatus.Closing });
         return new Promise<void>(rs => {
             this._rsDisconnecting = rs;
             this._ws!.close();
@@ -170,12 +171,6 @@ const defaultWsClientOptions: WsClientOptions = {
 export interface WsClientOptions extends BaseClientOptions {
     /** Server URL, starts with `ws://` or `wss://`. */
     server: string;
-
-    // Events
-    /** Event when connection status is changed */
-    onStatusChange?: (newStatus: WsClientStatus) => void;
-    /** Event when the connection is closed accidently (not manually closed). */
-    onLostConnection?: () => void;
 }
 
 export enum WsClientStatus {
@@ -183,4 +178,14 @@ export enum WsClientStatus {
     Opened = 'OPENED',
     Closing = 'CLOSING',
     Closed = 'CLOSED'
+}
+
+export interface WsClientEventData {
+    /** When connection status changed */
+    StatusChange: {
+        newStatus: WsClientStatus
+    },
+
+    /** When connection comes to closed from opened (not manually) */
+    LostConnection: undefined
 }
