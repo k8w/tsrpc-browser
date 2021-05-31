@@ -1,6 +1,6 @@
 {
   "name": "tsrpc-browser",
-  "version": "3.0.0-dev.13",
+  "version": "3.0.0-dev.14",
   "description": "TSRPC Client for browser",
   "main": "index.cjs",
   "exports": {
@@ -48,6 +48,6 @@
   },
   "typings": "index.d.ts",
   "dependencies": {
-    "tsrpc-base-client": "^1.0.2-dev.23"
+    "tsrpc-base-client": "^1.0.2-dev.25"
   }
 }
