@@ -6,10 +6,7 @@ import { MsgChat } from './proto/MsgChat';
 import { serviceProto } from './proto/serviceProto';
 
 export let client = new WsClient(serviceProto, {
-    server: 'ws://127.0.0.1:4000',
-    onStatusChange: v => {
-        console.log('[WS] Client Status Change', v)
-    }
+    server: 'ws://127.0.0.1:4000'
 });
 
 export const kunit = new KUnit();

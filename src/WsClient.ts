@@ -6,7 +6,7 @@ import { BaseServiceType, ServiceProto, TsrpcError, TsrpcErrorType } from "tsrpc
  * It uses native `WebSocket` of browser.
  * @typeParam ServiceType - `ServiceType` from generated `proto.ts`
  */
-export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<ServiceType, WsClientEventData> {
+export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<ServiceType> {
 
     readonly type = 'LONG';
 
@@ -86,7 +86,7 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
                 this._ws = ws;
                 this.logger?.log('Connected succ');
                 rs({ isSucc: true });
-                this.emit('StatusChange', { newStatus: WsClientStatus.Opened });
+                this.flows.postConnectFlow.exec({}, this.logger);
             };
 
             ws.onerror = e => {
@@ -106,7 +106,8 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
                 ws.onopen = ws.onclose = ws.onmessage = ws.onerror = null;
                 this._ws = undefined;
 
-                let isFromConnecting = !!this._promiseConnect;
+                // 连接中，返回连接失败
+                let isConnecting = !!this._promiseConnect;
                 if (this._promiseConnect) {
                     this._promiseConnect = undefined;
                     rs({
@@ -115,17 +116,24 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
                     });
                 }
 
-                this.emit('StatusChange', { newStatus: WsClientStatus.Closed });
-
+                // disconnect中，返回成功
+                let isDisconnecting = !!this._rsDisconnecting;
                 if (this._rsDisconnecting) {
                     this._rsDisconnecting();
                     this._rsDisconnecting = undefined;
                     this.logger?.log('Disconnected succ', `code=${e.code} reason=${e.reason}`);
                 }
-                // 已连接上 非主动关闭 触发掉线
-                else if (!isFromConnecting) {
+                // 非 disconnect 中，意外断开
+                else if (!isConnecting) {
                     this.logger?.log(`Lost connection to ${this.options.server}`, `code=${e.code} reason=${e.reason}`);
-                    this.emit('LostConnection', undefined);
+                }
+
+                // postDisconnectFlow，仅从连接状态断开时触发，所以 isConnecting 不触发
+                if (!isConnecting) {
+                    this.flows.postDisconnectFlow.exec({
+                        reason: e.reason,
+                        isByClient: isDisconnecting
+                    }, this.logger);
                 }
             };
         })
@@ -139,7 +147,6 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
             }
         }
 
-        this.emit('StatusChange', { newStatus: WsClientStatus.Opening });
         return this._promiseConnect;
     }
 
@@ -155,7 +162,6 @@ export class WsClient<ServiceType extends BaseServiceType> extends BaseClient<Se
         }
 
         this.logger?.log('Disconnecting...');
-        this.emit('StatusChange', { newStatus: WsClientStatus.Closing });
         return new Promise<void>(rs => {
             this._rsDisconnecting = rs;
             this._ws!.close();
@@ -178,14 +184,4 @@ export enum WsClientStatus {
     Opened = 'OPENED',
     Closing = 'CLOSING',
     Closed = 'CLOSED'
-}
-
-export interface WsClientEventData {
-    /** When connection status changed */
-    StatusChange: {
-        newStatus: WsClientStatus
-    },
-
-    /** When connection comes to closed from opened (not manually) */
-    LostConnection: undefined
 }

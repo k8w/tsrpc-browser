@@ -1,6 +1,6 @@
 {
   "name": "tsrpc-browser",
-  "version": "3.0.0-dev.9",
+  "version": "3.0.0-dev.10",
   "description": "TSRPC Client for browser",
   "main": "index.cjs",
   "exports": {
@@ -39,15 +39,15 @@
   "author": "k8w",
   "license": "MIT",
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.13.11",
+    "@microsoft/api-documenter": "^7.13.12",
     "@microsoft/api-extractor": "^7.15.2",
-    "rollup": "^2.50.3",
+    "rollup": "^2.50.5",
     "rollup-plugin-typescript2": "^0.22.0",
     "tslib": "^2.2.0",
     "typescript": "^4.3.2"
   },
   "typings": "index.d.ts",
   "dependencies": {
-    "tsrpc-base-client": "^1.0.2-dev.21"
+    "tsrpc-base-client": "^1.0.2-dev.22"
   }
 }
