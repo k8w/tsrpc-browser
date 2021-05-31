@@ -1,6 +1,6 @@
 {
   "name": "tsrpc-browser",
-  "version": "3.0.0-dev.10",
+  "version": "3.0.0-dev.12",
   "description": "TSRPC Client for browser",
   "main": "index.cjs",
   "exports": {
