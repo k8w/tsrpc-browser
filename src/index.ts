@@ -1,4 +1,4 @@
 import 'k8w-extend-native';
-export * from "./HttpClient";
-export * from './WsClient';
 export * from 'tsrpc-proto';
+export * from "./client/HttpClient";
+export * from './client/WsClient';
