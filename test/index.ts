@@ -1,4 +1,5 @@
 // import { kunit as kunitWs } from "./ws.test";
+import 'core-js';
 import { Logger } from "kunit/src/Logger";
 import { kunit as httpCase } from "./http.test";
 import { kunit as httpJsonCase } from "./httpJSON.test";
@@ -21,14 +22,14 @@ function getLogger(originalLogger: Logger, element: HTMLElement, prefix: string)
 async function main() {
     httpCase.logger = getLogger(httpCase.logger, document.getElementById('http')!, '[HTTP]')
     await httpCase.runAll();
-    document.querySelector('#http>h2>small')?.remove();
+    document.querySelector('#http>h2>small')?.remove?.();
 
     httpJsonCase.logger = getLogger(httpJsonCase.logger, document.getElementById('httpJSON')!, '[HTTP JSON]')
     await httpJsonCase.runAll();
-    document.querySelector('#httpJSON>h2>small')?.remove();
+    document.querySelector('#httpJSON>h2>small')?.remove?.();
 
     wsCase.logger = getLogger(wsCase.logger, document.getElementById('ws')!, '[WS]')
     await wsCase.runAll();
-    document.querySelector('#ws>h2>small')?.remove();
+    document.querySelector('#ws>h2>small')?.remove?.();
 }
 main();

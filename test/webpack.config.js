@@ -13,10 +13,29 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.ts$/, use: [
+                test: /\.ts$/,
+                // exclude: /(node_modules|bower_components)/,
+                use: [
+                    // {
+                    //     loader: 'babel-loader',
+                    //     options: {
+                    //         presets: [
+                    //             [
+                    //                 "@babel/preset-env",
+                    //                 {
+                    //                     useBuiltIns: "entry",
+                    //                     targets: { chrome: "30", ie: "8" },
+                    //                     corejs: '3.14.0'
+                    //                 }
+                    //             ]
+                    //         ],
+                    //         plugins: ['@babel/plugin-transform-runtime']
+                    //     }
+                    // },
                     {
                         loader: 'ts-loader'
-                    }
+                    },
+
                 ]
             }
         ]
@@ -27,5 +46,8 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),
         inline: false
+    },
+    optimization: {
+        minimize: false
     }
 }
