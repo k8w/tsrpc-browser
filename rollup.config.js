@@ -18,7 +18,8 @@ export default [
                     }
                 }
             })
-        ]
+        ],
+        external: ['tslib']
     },
     {
         input: './src/index.ts',
@@ -37,6 +38,7 @@ export default [
                     }
                 }
             })
-        ]
+        ],
+        external: ['tslib']
     }
 ]
