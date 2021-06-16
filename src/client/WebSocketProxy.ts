@@ -35,7 +35,21 @@ export class WebSocketProxy implements IWebSocketProxy {
     }
     async send(data: string | Uint8Array): Promise<{ err?: TsrpcError | undefined; }> {
         try {
-            this._ws!.send(data);
+            let sendData: string | ArrayBuffer;
+            if (typeof data === 'string') {
+                sendData = data;
+            }
+            else {
+                let buf = data;
+                if (buf.byteOffset === 0 && buf.byteLength === buf.buffer.byteLength) {
+                    sendData = buf.buffer;
+                }
+                else {
+                    sendData = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+                }
+            }
+
+            this._ws!.send(sendData);
             return {};
         }
         catch (err) {

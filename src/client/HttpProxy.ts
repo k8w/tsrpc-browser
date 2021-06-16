@@ -100,7 +100,22 @@ export class HttpProxy implements IHttpProxy {
         if (timeout) {
             xhr.timeout = timeout;
         }
-        xhr.send(options.data);
+
+        let data: string | ArrayBuffer;
+        if (typeof options.data === 'string') {
+            data = options.data;
+        }
+        else {
+            let buf = options.data;
+            if (buf.byteOffset === 0 && buf.byteLength === buf.buffer.byteLength) {
+                data = buf.buffer;
+            }
+            else {
+                data = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+            }
+        }
+
+        xhr.send(data);
 
         let abort = xhr.abort.bind(xhr);
 
