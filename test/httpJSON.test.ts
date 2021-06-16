@@ -1,9 +1,11 @@
 import { assert } from 'chai';
 import KUnit from 'kunit';
-import { TsrpcError, TsrpcErrorType } from 'tsrpc-proto';
+import { TsrpcErrorType } from 'tsrpc-proto';
 import { HttpClient } from '../src/client/HttpClient';
+import { TsrpcError } from '../src/index';
 import { MsgChat } from './proto/MsgChat';
 import { serviceProto } from './proto/serviceProto';
+
 
 export let client = new HttpClient(serviceProto, {
     server: 'http://localhost:3000',

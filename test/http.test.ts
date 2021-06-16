@@ -1,7 +1,8 @@
 import { assert } from 'chai';
 import KUnit from 'kunit';
-import { TsrpcError, TsrpcErrorType } from 'tsrpc-proto';
+import { TsrpcErrorType } from 'tsrpc-proto';
 import { HttpClient } from '../src/client/HttpClient';
+import { TsrpcError } from '../src/index';
 import { MsgChat } from './proto/MsgChat';
 import { serviceProto } from './proto/serviceProto';
 
@@ -33,9 +34,11 @@ kunit.test('CallApi normally', async function () {
 
 kunit.test('Inner Error', async function () {
     for (let v of ['Test', 'a/b/c/Test']) {
-        assert.deepStrictEqual(await client.callApi(v as any, {
+        let ret = await client.callApi(v as any, {
             name: 'InnerError'
-        }), {
+        });
+        console.log('aaa', (ret.err as any).__proto__ === TsrpcError.prototype)
+        assert.deepStrictEqual(ret, {
             isSucc: false,
             err: new TsrpcError('Internal Server Error', {
                 code: 'INTERNAL_ERR',
