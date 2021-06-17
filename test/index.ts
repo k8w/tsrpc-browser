@@ -1,4 +1,4 @@
-import 'core-js';
+import 'es6-shim';
 import { Logger } from '../src';
 import { kunit as httpCase } from "./http.test";
 import { kunit as httpJsonCase } from "./httpJSON.test";

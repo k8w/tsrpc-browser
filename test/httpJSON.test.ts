@@ -9,7 +9,9 @@ import { serviceProto } from './proto/serviceProto';
 
 export let client = new HttpClient(serviceProto, {
     server: 'http://localhost:3000',
-    json: true
+    json: true,
+    logger: console,
+    debugBuf: true
 });
 
 export const kunit = new KUnit();

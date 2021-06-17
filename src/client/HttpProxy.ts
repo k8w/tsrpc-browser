@@ -78,7 +78,7 @@ export class HttpProxy implements IHttpProxy {
             xhr.onload = async () => {
                 rs({
                     isSucc: true,
-                    res: options.responseType === 'text' ? xhr.responseText : new Uint8Array(xhr.response as ArrayBuffer)
+                    res: xhr.response && (options.responseType === 'text' ? xhr.responseText : new Uint8Array(xhr.response as ArrayBuffer))
                 })
             }
 
@@ -101,21 +101,7 @@ export class HttpProxy implements IHttpProxy {
             xhr.timeout = timeout;
         }
 
-        let data: string | ArrayBuffer;
-        if (typeof options.data === 'string') {
-            data = options.data;
-        }
-        else {
-            let buf = options.data;
-            if (buf.byteOffset === 0 && buf.byteLength === buf.buffer.byteLength) {
-                data = buf.buffer;
-            }
-            else {
-                data = buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
-            }
-        }
-
-        xhr.send(data);
+        xhr.send(options.data);
 
         let abort = xhr.abort.bind(xhr);
 
