@@ -8,34 +8,28 @@ module.exports = {
         filename: 'test.js'
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js']
+        extensions: ['', '.ts', '.tsx', '.js', '.mjs', '.cjs'],
     },
     module: {
         rules: [
             {
                 test: /\.ts$/,
-                // exclude: /(node_modules|bower_components)/,
                 use: [
-                    // {
-                    //     loader: 'babel-loader',
-                    //     options: {
-                    //         presets: [
-                    //             [
-                    //                 "@babel/preset-env",
-                    //                 {
-                    //                     useBuiltIns: "entry",
-                    //                     targets: { chrome: "30", ie: "8" },
-                    //                     corejs: '3.14.0'
-                    //                 }
-                    //             ]
-                    //         ],
-                    //         plugins: ['@babel/plugin-transform-runtime']
-                    //     }
-                    // },
+                    {
+                        loader: 'babel-loader',
+                    },
                     {
                         loader: 'ts-loader'
                     },
-
+                ]
+            },
+            {
+                test: /\.[cm]?js$/,
+                exclude: /core\-js/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                    },
                 ]
             }
         ]
@@ -49,5 +43,6 @@ module.exports = {
     },
     optimization: {
         minimize: false
-    }
+    },
+    devtool: false
 }

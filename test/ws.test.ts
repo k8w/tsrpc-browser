@@ -1,7 +1,6 @@
 import { assert } from 'chai';
-import KUnit from 'kunit';
-import { TsrpcErrorType } from 'tsrpc-proto';
-import { TsrpcError, WsClient } from '../src/index';
+import { KUnit } from 'kunit';
+import { TsrpcError, TsrpcErrorType, WsClient } from '../src/index';
 import { MsgChat } from './proto/MsgChat';
 import { serviceProto } from './proto/serviceProto';
 

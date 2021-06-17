@@ -1,6 +1,5 @@
-// import { kunit as kunitWs } from "./ws.test";
 import 'core-js';
-import { Logger } from "kunit/src/Logger";
+import { Logger } from '../src';
 import { kunit as httpCase } from "./http.test";
 import { kunit as httpJsonCase } from "./httpJSON.test";
 import { kunit as wsCase } from "./WS.test";

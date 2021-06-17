@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import KUnit from 'kunit';
+import { KUnit } from 'kunit';
 import { TsrpcErrorType } from 'tsrpc-proto';
 import { HttpClient } from '../src/client/HttpClient';
 import { TsrpcError } from '../src/index';
