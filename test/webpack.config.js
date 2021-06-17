@@ -37,10 +37,6 @@ module.exports = {
     plugins: [new HtmlWebpackPlugin({
         template: 'index.html'
     })],
-    devServer: {
-        contentBase: path.resolve(__dirname, 'dist'),
-        inline: false
-    },
     optimization: {
         minimize: false
     },

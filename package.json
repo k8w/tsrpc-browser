@@ -39,15 +39,15 @@
   "author": "k8w",
   "license": "MIT",
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.13.20",
+    "@microsoft/api-documenter": "^7.13.22",
     "@microsoft/api-extractor": "^7.16.1",
-    "rollup": "^2.52.0",
+    "rollup": "^2.52.1",
     "rollup-plugin-typescript2": "^0.30.0",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.3"
   },
   "typings": "index.d.ts",
   "dependencies": {
-    "tsrpc-base-client": "^1.0.3",
+    "tsrpc-base-client": "^1.0.5-dev.0",
     "tslib": "^2.3.0"
   }
 }
