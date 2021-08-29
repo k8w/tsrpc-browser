@@ -1,6 +1,6 @@
 {
   "name": "tsrpc-browser",
-  "version": "3.0.6-dev.0",
+  "version": "3.0.6-dev.1",
   "description": "TSRPC Client for browser",
   "main": "index.cjs",
   "exports": {
@@ -40,20 +40,20 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/preset-env": "^7.15.0",
-    "@microsoft/api-documenter": "^7.13.39",
-    "@microsoft/api-extractor": "^7.18.5",
+    "@microsoft/api-documenter": "^7.13.41",
+    "@microsoft/api-extractor": "^7.18.7",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^19.0.2",
     "@rollup/plugin-node-resolve": "^13.0.4",
-    "rollup": "^2.56.2",
+    "rollup": "^2.56.3",
     "rollup-plugin-typescript2": "^0.30.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.2"
   },
   "typings": "index.d.ts",
   "dependencies": {
-    "core-js": "^3.16.1",
+    "core-js": "^3.16.4",
     "tslib": "^2.3.1",
-    "tsrpc-base-client": "~1.0.8"
+    "tsrpc-base-client": "~1.0.9"
   },
   "browserslist": [
     "defaults",
