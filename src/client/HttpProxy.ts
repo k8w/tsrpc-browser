@@ -76,10 +76,22 @@ export class HttpProxy implements IHttpProxy {
 
             // Res
             xhr.onload = async () => {
-                rs({
-                    isSucc: true,
-                    res: xhr.response && (options.responseType === 'text' ? xhr.responseText : new Uint8Array(xhr.response as ArrayBuffer))
-                })
+                if (xhr.status === 200) {
+                    rs({
+                        isSucc: true,
+                        res: xhr.response && (options.responseType === 'text' ? xhr.responseText : new Uint8Array(xhr.response as ArrayBuffer))
+                    })
+                }
+                else {
+                    rs({
+                        isSucc: false,
+                        err: new TsrpcError({
+                            message: 'HTTP Error ' + xhr.status,
+                            type: TsrpcError.Type.ServerError,
+                            httpCode: xhr.status
+                        })
+                    });
+                }
             }
 
             let transportOptions = options.transportOptions as HttpClientTransportOptions;
