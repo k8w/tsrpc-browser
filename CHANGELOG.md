@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [3.0.7] - 2021-09-13
+### Changed
+- `index.cjs` renamed to `index.js` to support `umi`
 
 ## [3.0.6] - 2021-09-01
 ### Fixed
