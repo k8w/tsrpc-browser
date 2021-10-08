@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.0.8] - 2021-10-08
+### Changed
+- Update dependencies, many deps rename `index.cjs` to `index.js` to fit webpack.
+
 ## [3.0.7] - 2021-09-13
 ### Changed
 - `index.cjs` renamed to `index.js` to support `umi`
