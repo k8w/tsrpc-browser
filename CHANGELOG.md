@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.0.9] - 2021-10-09
+### Fixed
+- Missing log when encode request error
+
 ## [3.0.8] - 2021-10-08
 ### Changed
 - Update dependencies, many deps rename `index.cjs` to `index.js` to fit webpack.

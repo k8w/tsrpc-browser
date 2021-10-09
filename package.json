@@ -53,7 +53,7 @@
   "dependencies": {
     "core-js": "^3",
     "tslib": "^2.3.1",
-    "tsrpc-base-client": "~1.0.12"
+    "tsrpc-base-client": "~1.0.13"
   },
   "browserslist": [
     "defaults",
