@@ -7,7 +7,7 @@ import { HttpProxy } from './HttpProxy';
  * It uses XMLHttpRequest to send requests.
  * @typeParam ServiceType - `ServiceType` from generated `proto.ts`
  */
-export class HttpClient<ServiceType extends BaseServiceType = any> extends BaseHttpClient<ServiceType> {
+export class HttpClient<ServiceType extends BaseServiceType> extends BaseHttpClient<ServiceType> {
 
     readonly options!: Readonly<HttpClientOptions>;
 

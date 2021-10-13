@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.0.10] - 2021-10-13
+### Changed
+- `HttpClient` and `WsClient` no longer have default type param
+
 ## [3.0.9] - 2021-10-09
 ### Fixed
 - Missing log when encode request error
