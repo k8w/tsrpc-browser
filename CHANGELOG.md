@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.0.11-dev.0] - 2021-10-18
+### Added
+- 增加对 `mongodb/ObjectId` 的编解码支持
+
 ## [3.0.10] - 2021-10-13
 ### Changed
 - `HttpClient` and `WsClient` no longer have default type param

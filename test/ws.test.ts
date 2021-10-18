@@ -13,7 +13,11 @@ export let client = new WsClient(serviceProto, {
 export const kunit = new KUnit();
 
 kunit.test('Connect', async function () {
-    await client.connect();
+    let res = await client.connect();
+    if (!res.isSucc) {
+        console.log('conn failed', res.errMsg);
+    }
+    assert.strictEqual(res.isSucc, true);
 })
 
 kunit.test('CallApi normally', async function () {
@@ -66,6 +70,16 @@ kunit.test('TsrpcError', async function () {
     }
 })
 
+kunit.test('ObjectID', async function () {
+    // ObjectId
+    let objId1 = '616d62d2af8690290c9bd2ce';
+    let ret = await client.callApi('ObjId', {
+        id1: objId1
+    });
+    assert.strictEqual(ret.isSucc, true, ret.err?.message);
+    assert.strictEqual(objId1, ret.res!.id2);
+})
+
 kunit.test('sendMsg', async function () {
     let msg: MsgChat = {
         channel: 123,
@@ -105,13 +119,13 @@ kunit.test('error', async function () {
 })
 
 kunit.test('client timeout', async function () {
-    let client = new WsClient(serviceProto, {
+    let client2 = new WsClient(serviceProto, {
         server: 'ws://127.0.0.1:4000',
         timeout: 100
     });
-    await client.connect();
+    await client2.connect();
 
-    let result = await client.callApi('Test', { name: 'Timeout' });
+    let result = await client2.callApi('Test', { name: 'Timeout' });
     assert.deepStrictEqual(result, {
         isSucc: false,
         err: new TsrpcError({

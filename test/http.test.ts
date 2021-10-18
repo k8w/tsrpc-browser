@@ -1,8 +1,7 @@
 import { assert } from 'chai';
 import { KUnit } from 'kunit';
-import { TsrpcErrorType } from 'tsrpc-proto';
+import { TsrpcError, TsrpcErrorType } from '../src';
 import { HttpClient } from '../src/client/HttpClient';
-import { TsrpcError } from '../src/index';
 import { MsgChat } from './proto/MsgChat';
 import { serviceProto } from './proto/serviceProto';
 
@@ -117,3 +116,17 @@ kunit.test('client timeout', async function () {
         })
     });
 });
+
+kunit.test('ObjectID', async function () {
+    let client = new HttpClient(serviceProto, {
+        logger: console
+    });
+
+    // ObjectId
+    let objId1 = '616d62d2af8690290c9bd2ce';
+    let ret = await client.callApi('ObjId', {
+        id1: objId1
+    });
+    assert.strictEqual(ret.isSucc, true, ret.err?.message);
+    assert.strictEqual(objId1, ret.res!.id2);
+})

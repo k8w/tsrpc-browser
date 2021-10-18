@@ -38,7 +38,8 @@ export interface HttpClientTransportOptions extends TransportOptions {
 }
 
 const defaultHttpClientOptions: HttpClientOptions = {
-    ...defaultBaseHttpClientOptions
+    ...defaultBaseHttpClientOptions,
+    customObjectIdClass: String,
 }
 
 export interface HttpClientOptions extends BaseHttpClientOptions {
