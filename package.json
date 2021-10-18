@@ -14,7 +14,7 @@
     "coverage": "nyc mocha test/**/*.test.ts && start coverage\\index.html",
     "build": "npm run build:js && npm run build:dts && cp package.json LICENSE README.md dist/",
     "build:js": "rm -rf dist && npx rollup -c",
-    "build:dts": "rm -rf lib && npx tsc && npx api-extractor run --local --verbose && node scripts/removePrivate.js && rm -rf lib",
+    "build:dts": "rm -rf lib && npx tsc && npx api-extractor run --local --verbose && node scripts/postDts.js && rm -rf lib",
     "build:doc": "rm -rf docs/api && npx api-documenter markdown --input temp --output docs/api"
   },
   "repository": {
