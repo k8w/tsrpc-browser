@@ -20,7 +20,7 @@
     "es6-shim": "^0.35.6",
     "kunit": "^1.3.0",
     "ts-loader": "^9.2.6",
-    "tsrpc": "^3.1.0-dev.0"
+    "tsrpc": "^3.1.0-dev.2"
   },
   "devDependencies": {
     "@types/chai": "^4.2.22",

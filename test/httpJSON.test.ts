@@ -120,10 +120,6 @@ kunit.test('client timeout', async function () {
 });
 
 kunit.test('ExtendData', async function () {
-    let client = new HttpClient(serviceProto, {
-        logger: console
-    });
-
     let data: ReqExtendData['data'] = {
         objectId: '616d62d2af8690290c9bd2ce',
         date: new Date('2021/11/7'),

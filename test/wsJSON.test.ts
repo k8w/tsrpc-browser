@@ -143,6 +143,8 @@ kunit.test('client timeout', async function () {
             type: TsrpcErrorType.NetworkError
         })
     });
+
+    await client2.disconnect();
 });
 
 kunit.test('send/listen Msg', async function () {
@@ -181,4 +183,8 @@ kunit.test('send/listen Msg', async function () {
             time: 222
         }
     ])
+})
+
+kunit.test('disconnect', async function () {
+    await client.disconnect();
 })

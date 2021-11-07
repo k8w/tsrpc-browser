@@ -20,6 +20,9 @@ function getLogger(originalLogger: Logger, element: HTMLElement, prefix: string)
 }
 
 async function main() {
+    (window as any).atob = null;
+    (window as any).btoa = null;
+
     httpCase.logger = getLogger(httpCase.logger, document.getElementById('http')!, '[HTTP]')
     await httpCase.runAll();
     document.querySelector('#http>h2>small')?.remove?.();
