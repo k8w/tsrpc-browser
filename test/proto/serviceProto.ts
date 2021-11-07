@@ -1,7 +1,7 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqTest, ResTest } from './a/b/c/PtlTest';
 import { MsgChat } from './MsgChat';
-import { ReqObjId, ResObjId } from './PtlObjId';
+import { ReqExtendData, ResExtendData } from './PtlExtendData';
 import { ReqTest as ReqTest_1, ResTest as ResTest_1 } from './PtlTest';
 
 export interface ServiceType {
@@ -10,9 +10,9 @@ export interface ServiceType {
             req: ReqTest,
             res: ResTest
         },
-        "ObjId": {
-            req: ReqObjId,
-            res: ResObjId
+        "ExtendData": {
+            req: ReqExtendData,
+            res: ResExtendData
         },
         "Test": {
             req: ReqTest_1,
@@ -25,6 +25,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
+    "version": 1,
     "services": [
         {
             "id": 0,
@@ -37,8 +38,8 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "msg"
         },
         {
-            "id": 2,
-            "name": "ObjId",
+            "id": 4,
+            "name": "ExtendData",
             "type": "api"
         },
         {
@@ -114,28 +115,76 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 }
             ]
         },
-        "PtlObjId/ReqObjId": {
+        "PtlExtendData/ReqExtendData": {
             "type": "Interface",
             "properties": [
                 {
                     "id": 0,
-                    "name": "id1",
+                    "name": "data",
                     "type": {
-                        "type": "Reference",
-                        "target": "?mongodb/ObjectId"
+                        "type": "Interface",
+                        "properties": [
+                            {
+                                "id": 0,
+                                "name": "buf",
+                                "type": {
+                                    "type": "Buffer",
+                                    "arrayType": "Uint8Array"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "name": "date",
+                                "type": {
+                                    "type": "Date"
+                                }
+                            },
+                            {
+                                "id": 2,
+                                "name": "objectId",
+                                "type": {
+                                    "type": "Reference",
+                                    "target": "?mongodb/ObjectId"
+                                }
+                            }
+                        ]
                     }
                 }
             ]
         },
-        "PtlObjId/ResObjId": {
+        "PtlExtendData/ResExtendData": {
             "type": "Interface",
             "properties": [
                 {
                     "id": 0,
-                    "name": "id2",
+                    "name": "data",
                     "type": {
-                        "type": "Reference",
-                        "target": "?mongodb/ObjectId"
+                        "type": "Interface",
+                        "properties": [
+                            {
+                                "id": 0,
+                                "name": "buf",
+                                "type": {
+                                    "type": "Buffer",
+                                    "arrayType": "Uint8Array"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "name": "date",
+                                "type": {
+                                    "type": "Date"
+                                }
+                            },
+                            {
+                                "id": 2,
+                                "name": "objectId",
+                                "type": {
+                                    "type": "Reference",
+                                    "target": "?mongodb/ObjectId"
+                                }
+                            }
+                        ]
                     }
                 }
             ]

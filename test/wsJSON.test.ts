@@ -1,19 +1,26 @@
 import { assert } from 'chai';
 import { KUnit } from 'kunit';
-import { TsrpcError, TsrpcErrorType } from '../src';
-import { HttpClient } from '../src/client/HttpClient';
+import { TsrpcError, TsrpcErrorType, WsClient } from '../src/index';
 import { MsgChat } from './proto/MsgChat';
 import { ReqExtendData } from './proto/PtlExtendData';
 import { serviceProto } from './proto/serviceProto';
 
-export let client = new HttpClient(serviceProto, {
-    server: 'http://localhost:3000',
-    json: true,
+export let client = new WsClient(serviceProto, {
+    server: 'ws://127.0.0.1:4001',
     logger: console,
-    debugBuf: true
+    debugBuf: true,
+    json: true
 });
 
 export const kunit = new KUnit();
+
+kunit.test('Connect', async function () {
+    let res = await client.connect();
+    if (!res.isSucc) {
+        console.log('conn failed', res.errMsg);
+    }
+    assert.strictEqual(res.isSucc, true);
+})
 
 kunit.test('CallApi normally', async function () {
     // Succ
@@ -37,11 +44,9 @@ kunit.test('CallApi normally', async function () {
 
 kunit.test('Inner Error', async function () {
     for (let v of ['Test', 'a/b/c/Test']) {
-        let ret = await client.callApi(v as any, {
+        assert.deepStrictEqual(await client.callApi(v as any, {
             name: 'InnerError'
-        });
-        console.log('aaa', (ret.err as any).__proto__ === TsrpcError.prototype)
-        assert.deepStrictEqual(ret, {
+        }), {
             isSucc: false,
             err: new TsrpcError('Internal Server Error', {
                 code: 'INTERNAL_ERR',
@@ -58,11 +63,30 @@ kunit.test('TsrpcError', async function () {
             name: 'TsrpcError'
         }), {
             isSucc: false,
-            err: new TsrpcError(v + ' TsrpcError', {
+            err: new TsrpcError({
+                message: v + ' TsrpcError',
+                type: TsrpcErrorType.ApiError,
                 info: 'ErrInfo ' + v
             })
         });
     }
+})
+
+kunit.test('ExtendData', async function () {
+    let data: ReqExtendData['data'] = {
+        objectId: '616d62d2af8690290c9bd2ce',
+        date: new Date('2021/11/7'),
+        buf: new Uint8Array([1, 2, 3, 4, 5, 255, 254, 253, 252, 251, 250])
+    }
+    let ret = await client.callApi('ExtendData', {
+        data: data
+    });
+    assert.deepStrictEqual(ret, {
+        isSucc: true,
+        res: {
+            data: data
+        }
+    });
 })
 
 kunit.test('sendMsg', async function () {
@@ -95,20 +119,22 @@ kunit.test('abort', async function () {
 })
 
 kunit.test('error', async function () {
-    let client1 = new HttpClient(serviceProto, {
-        server: 'http://localhost:9999'
+    let client1 = new WsClient(serviceProto, {
+        server: 'ws://localhost:9999'
     })
 
-    let res = await client1.callApi('Test', { name: 'xx' })
-    assert.strictEqual(res.isSucc, false);
-    assert.strictEqual(res.err?.type, TsrpcErrorType.NetworkError);
+    let ret = await client1.connect()
+    assert.strictEqual(ret.isSucc, false);
 })
 
 kunit.test('client timeout', async function () {
-    let client = new HttpClient(serviceProto, {
+    let client2 = new WsClient(serviceProto, {
+        server: 'ws://127.0.0.1:4000',
         timeout: 100
     });
-    let result = await client.callApi('Test', { name: 'Timeout' });
+    await client2.connect();
+
+    let result = await client2.callApi('Test', { name: 'Timeout' });
     assert.deepStrictEqual(result, {
         isSucc: false,
         err: new TsrpcError({
@@ -119,23 +145,40 @@ kunit.test('client timeout', async function () {
     });
 });
 
-kunit.test('ExtendData', async function () {
-    let client = new HttpClient(serviceProto, {
-        logger: console
+kunit.test('send/listen Msg', async function () {
+    let recved: MsgChat[] = [];
+    let handler = (v: MsgChat) => {
+        recved.push(v);
+    };
+
+    client.listenMsg('Chat', handler);
+
+    client.sendMsg('Chat', {
+        channel: 111,
+        userName: 'Peter',
+        content: 'Good morning~',
+        time: Date.now()
     });
 
-    let data: ReqExtendData['data'] = {
-        objectId: '616d62d2af8690290c9bd2ce',
-        date: new Date('2021/11/7'),
-        buf: new Uint8Array([1, 2, 3, 4, 5, 255, 254, 253, 252, 251, 250])
-    }
-    let ret = await client.callApi('ExtendData', {
-        data: data
-    });
-    assert.deepStrictEqual(ret, {
-        isSucc: true,
-        res: {
-            data: data
+    await new Promise<void>(rs => {
+        setTimeout(() => {
+            rs();
+        }, 1000);
+    })
+
+    client.unlistenMsg('Chat', handler);
+    assert.deepStrictEqual(recved, [
+        {
+            channel: 111,
+            userName: 'System',
+            content: 'Good morning~',
+            time: 111
+        },
+        {
+            channel: 111,
+            userName: 'System',
+            content: 'Good morning~',
+            time: 222
         }
-    });
+    ])
 })

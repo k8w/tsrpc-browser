@@ -2,7 +2,8 @@ import 'es6-shim';
 import { Logger } from '../src';
 import { kunit as httpCase } from "./http.test";
 import { kunit as httpJsonCase } from "./httpJSON.test";
-import { kunit as wsCase } from "./WS.test";
+import { kunit as wsCase } from "./ws.test";
+import { kunit as wsJsonCase } from "./wsJSON.test";
 
 function getLogger(originalLogger: Logger, element: HTMLElement, prefix: string) {
     let logger = (['debug', 'log', 'warn', 'error'] as const).reduce((prev, next) => {
@@ -30,5 +31,10 @@ async function main() {
     wsCase.logger = getLogger(wsCase.logger, document.getElementById('ws')!, '[WS]')
     await wsCase.runAll();
     document.querySelector('#ws>h2>small')?.remove?.();
+
+    wsJsonCase.logger = getLogger(wsJsonCase.logger, document.getElementById('wsJSON')!, '[WS JSON]')
+    await wsJsonCase.runAll();
+    document.querySelector('#wsJSON>h2>small')?.remove?.();
+
 }
 main();

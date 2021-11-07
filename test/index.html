@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TSRPC Browser Test</title>
     <style>
-        html,body{
+        html,
+        body {
             background: #e5e5e5;
         }
-        #http, #httpJSON, #ws {
+
+        #http,
+        #httpJSON,
+        #ws,
+        #wsJSON {
             margin: 20px;
             background: white;
             padding: 20px;
@@ -17,25 +23,34 @@
             border: solid 1px #ccc;
             line-height: 1.5em;
         }
-        #http >*, #ws >*, #httpJSON >* {
+
+        #http>*,
+        #ws>*,
+        #httpJSON>*,
+        #wsJSON>* {
             display: block;
             white-space: pre;
         }
-        debug{
+
+        debug {
             color: lightblue;
         }
-        log{
+
+        log {
             color: green;
         }
-        warn{
+
+        warn {
             background: orangered;
             color: white;
         }
-        error{
+
+        error {
             color: red;
         }
     </style>
 </head>
+
 <body>
     <h1>TSRPC Browser Test</h1>
     <div id="http">
@@ -47,5 +62,9 @@
     <div id="ws">
         <h2>WebSocket<small> (Running...)</small></h2>
     </div>
+    <div id="wsJSON">
+        <h2>WebSocket JSON<small> (Running...)</small></h2>
+    </div>
 </body>
+
 </html>

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [3.1.0-dev.0] - 2021-11-07
+### Added
+- JSON 模式支持增强类型的传输，如 `ArrayBuffer`、`Date`、`ObjectId`
+- WebSocket 支持 JSON 格式传输
+
 ## [3.0.11] - 2021-10-18
 ### Added
 - 增加对 `mongodb/ObjectId` 的编解码支持

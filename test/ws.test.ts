@@ -2,6 +2,7 @@ import { assert } from 'chai';
 import { KUnit } from 'kunit';
 import { TsrpcError, TsrpcErrorType, WsClient } from '../src/index';
 import { MsgChat } from './proto/MsgChat';
+import { ReqExtendData } from './proto/PtlExtendData';
 import { serviceProto } from './proto/serviceProto';
 
 export let client = new WsClient(serviceProto, {
@@ -70,14 +71,21 @@ kunit.test('TsrpcError', async function () {
     }
 })
 
-kunit.test('ObjectID', async function () {
-    // ObjectId
-    let objId1 = '616d62d2af8690290c9bd2ce';
-    let ret = await client.callApi('ObjId', {
-        id1: objId1
+kunit.test('ExtendData', async function () {
+    let data: ReqExtendData['data'] = {
+        objectId: '616d62d2af8690290c9bd2ce',
+        date: new Date('2021/11/7'),
+        buf: new Uint8Array([1, 2, 3, 4, 5, 255, 254, 253, 252, 251, 250])
+    }
+    let ret = await client.callApi('ExtendData', {
+        data: data
     });
-    assert.strictEqual(ret.isSucc, true, ret.err?.message);
-    assert.strictEqual(objId1, ret.res!.id2);
+    assert.deepStrictEqual(ret, {
+        isSucc: true,
+        res: {
+            data: data
+        }
+    });
 })
 
 kunit.test('sendMsg', async function () {
