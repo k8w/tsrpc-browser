@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [3.1.0-dev.0] - 2021-11-07
+## [3.1.0] - 2021-11-08
 ### Added
 - JSON 模式支持增强类型的传输，如 `ArrayBuffer`、`Date`、`ObjectId`
 - WebSocket 支持 JSON 格式传输
