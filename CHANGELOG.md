@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.1.2] - 2021-11-17
+## Changed
+- Update dependencies
+
 ## [3.1.0] - 2021-11-08
 ### Added
 - JSON 模式支持增强类型的传输，如 `ArrayBuffer`、`Date`、`ObjectId`
