@@ -1,7 +1,5 @@
-import { babel } from '@rollup/plugin-babel';
-import commonjs from '@rollup/plugin-commonjs';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
+
 export default [
     {
         input: './src/index.ts',
@@ -19,12 +17,9 @@ export default [
                         module: "esnext"
                     }
                 }
-            }),
-            nodeResolve(),
-            commonjs(),
-            babel({ babelHelpers: 'bundled' })
+            })
         ],
-        external: ['tslib', 'k8w-extend-native', /core\-js/]
+        external: ['tslib', /core\-js/]
     },
     {
         input: './src/index.ts',
@@ -42,11 +37,8 @@ export default [
                         module: "esnext"
                     }
                 }
-            }),
-            nodeResolve(),
-            commonjs(),
-            babel({ babelHelpers: 'bundled' })
+            })
         ],
-        external: ['tslib', 'k8w-extend-native', /core\-js/]
+        external: ['tslib', /core\-js/]
     }
 ]
