@@ -76,7 +76,8 @@ export class HttpProxy implements IHttpProxy {
 
             // Res
             xhr.onload = async () => {
-                if (xhr.status === 200) {
+                console.log('xxxxxxxxxxxxx', xhr.status)
+                if (xhr.status === 200 || xhr.status === 500) {
                     rs({
                         isSucc: true,
                         res: xhr.response && (options.responseType === 'text' ? xhr.responseText : new Uint8Array(xhr.response as ArrayBuffer))

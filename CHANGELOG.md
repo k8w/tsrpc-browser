@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.1.4] - 2021-12-19
+### Added
+- `WsServer` now support client use `buffer` as transfering format when server set `json: true`
+
 ## [3.1.3] - 2021-12-03
 ### Added
 - log `[SendMsgErr]`

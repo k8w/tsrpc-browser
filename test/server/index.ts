@@ -47,7 +47,7 @@ wsServer.start();
 
 let wsServerJSON = new WsServer(serviceProto, {
     port: 4001,
-    jsonEnabled: true,
+    json: true,
     logger: new PrefixLogger({
         logger: new TerminalColorLogger(),
         prefixs: ['[WS]']

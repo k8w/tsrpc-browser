@@ -8,8 +8,8 @@ export class WebSocketProxy implements IWebSocketProxy {
     options!: IWebSocketProxy['options'];
 
     private _ws?: WebSocket;
-    connect(server: string): void {
-        this._ws = new WebSocket(server);
+    connect(server: string, protocols?: string[]): void {
+        this._ws = new WebSocket(server, protocols);
         this._ws.binaryType = 'arraybuffer';
 
         this._ws.onopen = this.options.onOpen;
