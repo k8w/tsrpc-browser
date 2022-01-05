@@ -1,5 +1,10 @@
 # CHANGELOG
 
+
+## [3.1.5] - 2022-01-06
+### Fixed
+- `cjs` to `js` to fix `react-scripts@5`
+
 ## [3.1.4] - 2021-12-19
 ### Added
 - `WsServer` now support client use `buffer` as transfering format when server set `json: true`
