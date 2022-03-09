@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.2.1] - 2022-03-09
+### Fixed
+- Removed unused logs
+
 ## [3.2.0] - 2022-02-26
 ### Added
 - Support using `keyof`
