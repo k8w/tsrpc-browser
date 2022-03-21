@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [3.2.2-dev.0] - 2022-03-21
+### Fixed
+- `postDisconnectFlow` not executed when `disconnect()` manually
+
+
 ## [3.2.1] - 2022-03-09
 ### Fixed
 - Removed unused logs
