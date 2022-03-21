@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [3.2.2-dev.0] - 2022-03-21
+## [3.2.2] - 2022-03-21
 ### Fixed
 - `postDisconnectFlow` not executed when `disconnect()` manually
 
