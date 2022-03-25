@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [3.2.3] - 2022-03-25
+### Fixed
+- Compatibility with Cocos Creator on Android, when using `disconnect` without parameters.
+- Compatibility with UniApp Native (Missing `navigator.userAgent`)
+
 ## [3.2.2] - 2022-03-21
 ### Fixed
 - `postDisconnectFlow` not executed when `disconnect()` manually

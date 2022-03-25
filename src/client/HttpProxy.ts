@@ -13,7 +13,7 @@ export class HttpProxy implements IHttpProxy {
         })
 
         let xhr = new XMLHttpRequest();
-        if (navigator.userAgent.indexOf('MSIE 8.0;') > -1) {
+        if (typeof navigator !== 'undefined' && navigator?.userAgent?.indexOf('MSIE 8.0;') > -1) {
             //IE8 不支持onload onabort onerror事件
             xhr.onreadystatechange = async () => {
                 if (xhr.readyState == 4) {
