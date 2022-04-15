@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [3.3.0] - 2022-04-15
+### Added
+- Builtin heartbeat support
+- New options `logApi` and `logMsg`
+- New options `logLevel`
+
 ## [3.2.3] - 2022-03-25
 ### Fixed
 - Compatibility with Cocos Creator on Android, when using `disconnect` without parameters.

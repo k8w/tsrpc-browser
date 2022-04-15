@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import { KUnit } from 'kunit';
+import { TransportDataUtil, WsClientStatus } from '../node_modules/tsrpc-base-client';
 import { TsrpcError, TsrpcErrorType, WsClient } from '../src/index';
 import { MsgChat } from './proto/MsgChat';
 import { ReqExtendData } from './proto/PtlExtendData';
@@ -187,4 +188,56 @@ kunit.test('send/listen Msg', async function () {
 
 kunit.test('disconnect', async function () {
     await client.disconnect();
+})
+
+kunit.test('Client heartbeat works', async function () {
+    let client = new WsClient(serviceProto, {
+        server: 'ws://127.0.0.1:4001',
+        logger: console,
+        heartbeat: {
+            interval: 1000,
+            timeout: 1000
+        },
+        json: true
+    });
+    await client.connect();
+
+    await new Promise(rs => { setTimeout(rs, 2000) });
+    client.logger?.log('lastHeartbeatLatency', client.lastHeartbeatLatency);
+    assert.strictEqual(client.status, WsClientStatus.Opened)
+    assert.ok(client.lastHeartbeatLatency > 0);
+
+    await client.disconnect();
+})
+
+kunit.test('Client heartbeat error', async function () {
+    let client = new WsClient(serviceProto, {
+        server: 'ws://127.0.0.1:4001',
+        logger: console,
+        heartbeat: {
+            interval: 1000,
+            timeout: 1000
+        },
+        json: true
+    });
+
+    let disconnectFlowData: { isManual?: boolean } | undefined;
+    client.flows.postDisconnectFlow.push(v => {
+        disconnectFlowData = {}
+        return v;
+    })
+
+    await client.connect();
+
+    const temp = TransportDataUtil.HeartbeatPacket;
+    (TransportDataUtil as any).HeartbeatPacket = new Uint8Array([0, 0, 0, 0, 0, 1, 2, 3, 4, 5]);
+
+    await new Promise(rs => { setTimeout(rs, 2000) });
+    client.logger?.log('lastHeartbeatLatency', client.lastHeartbeatLatency);
+
+    assert.strictEqual(client.status, WsClientStatus.Closed)
+    assert.deepStrictEqual(disconnectFlowData, {})
+
+    await client.disconnect();
+    (TransportDataUtil as any).HeartbeatPacket = temp;
 })
