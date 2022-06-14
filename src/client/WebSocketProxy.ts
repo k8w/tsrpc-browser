@@ -13,6 +13,7 @@ export class WebSocketProxy implements IWebSocketProxy {
         this._ws.binaryType = 'arraybuffer';
 
         this._ws.onopen = this.options.onOpen;
+        this._ws.onerror = this.options.onError;
         this._ws.onclose = e => {
             this.options.onClose(e.code, e.reason);
             this._ws = undefined;
