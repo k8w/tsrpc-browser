@@ -19,11 +19,11 @@ export class HttpClient<ServiceType extends BaseServiceType> extends BaseHttpCli
         });
     }
 
-    callApi<T extends keyof ServiceType['api']>(apiName: T, req: ServiceType['api'][T]['req'], options: HttpClientTransportOptions = {}): Promise<ApiReturn<ServiceType['api'][T]['res']>> {
+    callApi<T extends string & keyof ServiceType['api']>(apiName: T, req: ServiceType['api'][T]['req'], options: HttpClientTransportOptions = {}): Promise<ApiReturn<ServiceType['api'][T]['res']>> {
         return super.callApi(apiName, req, options);
     };
 
-    sendMsg<T extends keyof ServiceType['msg']>(msgName: T, msg: ServiceType['msg'][T], options: HttpClientTransportOptions = {}): Promise<{ isSucc: true } | { isSucc: false, err: TsrpcError }> {
+    sendMsg<T extends string & keyof ServiceType['msg']>(msgName: T, msg: ServiceType['msg'][T], options: HttpClientTransportOptions = {}): Promise<{ isSucc: true } | { isSucc: false, err: TsrpcError }> {
         return super.sendMsg(msgName, msg, options);
     }
 

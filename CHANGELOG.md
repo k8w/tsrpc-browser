@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## [3.3.1-dev.0] - 2022-04-15
+## [3.4.0] - 2022-04-15
 ### Changed
 - Add listener for `ws.onerror` 
+- Update deps
 
 ## [3.3.0] - 2022-04-15
 ### Added

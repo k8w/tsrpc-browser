@@ -1,5 +1,5 @@
 import assert from "assert";
-import { ObjectId } from 'bson';
+import { ObjectId } from 'mongodb';
 import { ApiCall } from "tsrpc";
 import { ReqExtendData, ResExtendData } from "../../proto/PtlExtendData";
 
