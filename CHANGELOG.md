@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.4.1] - 2022-06-25
+### Added
+- New client flow: `preRecvMsgFlow` and `postRecvMsgFlow`
+
 ## [3.4.0] - 2022-04-15
 ### Changed
 - Add listener for `ws.onerror` 

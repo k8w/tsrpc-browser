@@ -74,7 +74,7 @@ kunit.test('TsrpcError', async function () {
 
 kunit.test('ExtendData', async function () {
     let data: ReqExtendData['data'] = {
-        objectId: '616d62d2af8690290c9bd2ce',
+        objectId: '616d62d2af8690290c9bd2ce' as any,
         date: new Date('2021/11/7'),
         buf: new Uint8Array([1, 2, 3, 4, 5, 255, 254, 253, 252, 251, 250])
     }
