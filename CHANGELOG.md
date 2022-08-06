@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.4.3] - 2022-08-06
+### Fixed
+- Publish error
+
 ## [3.4.2] - 2022-08-05
 ### Added
 - Protect `WebSocketProxy.onClose` executed duplicately.
