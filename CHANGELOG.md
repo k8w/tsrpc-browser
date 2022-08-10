@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.4.5] - 2022-08-10
+### Fixed
+- Ignore incoming data after heartbeat timeout
+
 ## [3.4.3] - 2022-08-06
 ### Fixed
 - Publish error
