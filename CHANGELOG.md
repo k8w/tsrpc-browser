@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.4.11] - 2022-11-26
+### Changed
+- Update deps
+
 ## [3.4.8] - 2022-10-19
 ### Fixed
 - Update to `tsrpc-base-client@2.1.10`
