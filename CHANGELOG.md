@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [3.4.14] - 2024-01-03
+### Added
+- Add option `caUrl` to adapt Cocos Creator and Android native.
+### Fixed
+- Update dependencies
+
 ## [3.4.13] - 2023-05-23
 ### Changed
 - Update deps (Fixed cocos supporting bug)

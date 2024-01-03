@@ -7,9 +7,21 @@ import { TsrpcError } from "tsrpc-proto";
 export class WebSocketProxy implements IWebSocketProxy {
     options!: IWebSocketProxy['options'];
 
+    constructor(
+        public caUrl: string | undefined
+    ) {
+
+    }
+
     private _ws?: WebSocket;
     connect(server: string, protocols?: string[]): void {
-        this._ws = new WebSocket(server, protocols);
+        if (this.caUrl) {
+            // @ts-ignore
+            this._ws = new WebSocket(server, protocols, this.caUrl);
+        }
+        else {
+            this._ws = new WebSocket(server, protocols);
+        }
         this._ws.binaryType = 'arraybuffer';
 
         this._ws.onopen = this.options.onOpen;
