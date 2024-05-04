@@ -1,6 +1,9 @@
 # CHANGELOG
 
-<<<<<<< HEAD
+## [3.4.16] - 2024-05-05
+### Fixed
+- Update dependencies `tsbuffer`
+
 ## [3.4.14] - 2024-01-03
 ### Added
 - Add option `caUrl` to adapt Cocos Creator and Android native.
@@ -10,11 +13,6 @@
 ## [3.4.13] - 2023-05-23
 ### Changed
 - Update deps (Fixed cocos supporting bug)
-=======
-## [3.4.15] - 2024-05-05
-### Fixed
-- Update dependencies `tsbuffer`
->>>>>>> 4d55cf0 (## [3.4.15] - 2024-05-05)
 
 ## [3.4.11] - 2022-11-26
 ### Changed
