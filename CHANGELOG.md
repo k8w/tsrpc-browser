@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.4.17] - 2025-10-02
+### Fixed
+- Fixed bug that `Pick<Union,Date>[]` won't decode `Date` field
+
 ## [3.4.16] - 2024-05-05
 ### Fixed
 - Update dependencies `tsbuffer`
