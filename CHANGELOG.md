@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [3.4.18] - 2025-10-10
+### Fixed
+- Update to `tsrpc-base-client@2.1.17`
+
 ## [3.4.17] - 2025-10-02
 ### Fixed
 - Fixed bug that `Pick<Union,Date>[]` won't decode `Date` field
